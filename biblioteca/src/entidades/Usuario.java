@@ -1,20 +1,22 @@
 package entidades;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class Usuario
 {
     private String Nome;
-    private String Registro;
-    private Date DataNascimento;
-    // Numero de cada livro emprestado
-    private List<String> livrosEmprestados;
+    private String CodigoUsuario;
+    private LocalDate DataNascimento;
+    //Armazena apenas o codigo/id de cada emrpestimo feito
+    private List<String> codigoEmprestimos;
 
-    public Usuario(String nome, String registro, Date dataNascimento)
+    public Usuario(String nome, String codigoUsuario, LocalDate dataNascimento)
     {
-        setNome(nome);
-        setRegistro(registro);
-        setDataNascimento(dataNascimento);   
+        setNome          (nome);
+        setCodigoUsuario (codigoUsuario);
+        setDataNascimento(dataNascimento);  
+        codigoEmprestimos = new ArrayList<>();
     }
     
     // GETTER E SETTERS
@@ -27,31 +29,31 @@ public class Usuario
     {
         this.Nome = nome;
     }
-    // REGISTRO
-    public String getRegistro()
+    // CÓDIGO DO USUÁRIO
+    public String getCodigoUsuario()
     {
-        return Registro;
+        return CodigoUsuario;
     }
-    public void setRegistro(String registro)
+    public void setCodigoUsuario(String codigoUsuario)
     {
-        this.Registro = registro;
+        this.CodigoUsuario = codigoUsuario;
     }
     // DATA DE NASCIMENTO
-    public Date getDataNascimento()
+    public LocalDate getDataNascimento()
     {
         return DataNascimento;
     }
-    public void setDataNascimento(Date dataNascimento)
+    public void setDataNascimento(LocalDate dataNascimento)
     {
         this.DataNascimento = dataNascimento;
     }
-    // LIVROS EMPRESTADOS
-    public List<String> getLivrosEmprestados()
+    // CÓDIGOS DOS EMPRÉSTIMOS
+    public List<String> getCodigoEmprestimos()
     {
-        return livrosEmprestados;
+        return codigoEmprestimos;
     }
-    public void setLivrosEmprestados(String livroEmprestado)
+    public void setCodigoEmprestimos(String codigoEmprestimo)
     {
-        this.livrosEmprestados.add(livroEmprestado);
+        this.codigoEmprestimos.add(codigoEmprestimo);
     }
 }

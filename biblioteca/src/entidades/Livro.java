@@ -85,5 +85,13 @@ public class Livro
     public void setQuantidadeDisponivel(Integer QuantidadeDisponivel)
     {
         this.QuantidadeDisponivel = QuantidadeDisponivel;
-    }    
+    }  
+    public void emprestarLivro()
+    {
+            this.QuantidadeDisponivel--;
+    }
+    public void devolverLivro()
+    {
+            this.QuantidadeDisponivel++;
+    }
 }

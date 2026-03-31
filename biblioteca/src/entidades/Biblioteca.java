@@ -43,36 +43,46 @@ public class Biblioteca {
         return livros;
     }
 
-    public boolean adicionarLivro(String titulo, String autor, String genero, String editora, String numeroLivro,
+    public boolean adicionarLivro(String titulo, String autor, String genero, String editora, String Isbn,
             Integer quantidadePaginas, Integer quantidadeDisponivel) {
-        Livro livro = new Livro(titulo, autor, genero, editora, numeroLivro, quantidadePaginas, quantidadeDisponivel);
-
-        for (int i = 0; i < this.livros.size(); i++)
-            if (this.livros.get(i).getNumeroLivro().equals(livro.getNumeroLivro()))
-                // Retorna FALSE se o número do livro já existir
-                return false;
-
+                
+        for (Livro livroAtual : this.livros)
+            if (livroAtual.getIsbn().equals(Isbn))
+                throw new IllegalArgumentException("O Livro " + Isbn + " já foi cadastrado!");
+                    
+        Livro livro = new Livro(titulo, autor, genero, editora, Isbn, quantidadePaginas, quantidadeDisponivel);
+        
         this.livros.add(livro);
         // Retorna TRUE se o livro for adicionado com sucesso
         return true;
     }
 
-    public boolean removerLivro(String numeroLivro) {
-        for (int i = 0; i < this.livros.size(); i++)
-            if (this.livros.get(i).getNumeroLivro().equals(numeroLivro)) {
-                this.livros.remove(i);
+    public boolean removerLivro(String Isbn) {
+        if(Isbn == null || Isbn.isEmpty())
+            throw new IllegalArgumentException("IBNS inválido!");
+        
+        Isbn = Isbn.trim();
+
+        for (Livro livroAtual : this.livros)
+            if (livroAtual.getIsbn().equals(Isbn)) {
+                this.livros.remove(livroAtual.getIsbn());
                 // Retorna TRUE se o livro for encontrado e removido
                 return true;
             }
-        // Retorna FALSE se o livro não for encontrado
-        return false;
+        throw new IllegalArgumentException("Livro não encontrado!");
     }
 
-    public Livro buscarLivro(String numeroLivro) {
+    public Livro buscarLivro(String Isbn) {
+        if(Isbn == null || Isbn.isEmpty())
+            throw new IllegalArgumentException("Isbn inválido!");
+
+        Isbn = Isbn.trim();
+
         for (Livro livro : this.livros)
-            if (livro.getNumeroLivro().equals(numeroLivro))
+            if (livro.getIsbn().equals(Isbn))
                 return livro;
-        return null; // Retorna null se o livro não for encontrado
+     
+        throw new IllegalArgumentException("Livro não encontrado!"); 
     }
 
     // USUARIOS
@@ -83,10 +93,9 @@ public class Biblioteca {
     public boolean adicionarUsuario(String nome, String registro, LocalDate dataNascimento) {
         Usuario usuario = new Usuario(nome, registro, dataNascimento);
 
-        for (int i = 0; i < this.usuarios.size(); i++)
-            if (this.usuarios.get(i).getCodigoUsuario().equals(usuario.getCodigoUsuario()))
-                // Retorna FALSE se o código do usuário já existir
-                return false;
+        for (Usuario usuarioAtual : this.usuarios)
+            if (usuarioAtual.getCodigoUsuario().equals(usuario.getCodigoUsuario()))
+                throw new IllegalArgumentException("O usuário já possui cadastro");    
 
         this.usuarios.add(usuario);
         // Retorna TRUE se o usuário for adicionado com sucesso
@@ -94,41 +103,69 @@ public class Biblioteca {
     }
 
     public boolean removerUsuario(String codigoUsuario) {
-        for (int i = 0; i < this.usuarios.size(); i++)
-            if (this.usuarios.get(i).getCodigoUsuario().equals(codigoUsuario)) {
-                this.usuarios.remove(i);
+        for (Usuario usuarioAtual : this.usuarios)
+            if (usuarioAtual.getCodigoUsuario().equals(codigoUsuario)) {
+                this.usuarios.remove(usuarioAtual);
                 // Retorna TRUE se o usuário for encontrado e removido
                 return true;
             }
         // Retorna FALSE se o usuário não for encontrado
-        return false;
+        throw new IllegalArgumentException("Usuário não encontrado");
     }
 
     public Usuario buscarUsuario(String codigoUsuario) {
+        if(codigoUsuario == null || codigoUsuario.isEmpty())
+            throw new IllegalArgumentException("O codigo de usuário inválido!");
+        else
+            codigoUsuario = codigoUsuario.trim();
         for (Usuario usuario : this.usuarios)
             if (usuario.getCodigoUsuario().equals(codigoUsuario))
                 return usuario;
-        return null; // Retorna null se o usuário não for encontrado
+        
+        throw new IllegalArgumentException("Usuário não encontrado!");
     }
 
     public List<Emprestimo> getEmprestimos() {
         return emprestimos;
     }
     public Emprestimo buscarEmprestimo(String codigoEmprestimo) {
+        if (codigoEmprestimo == null || codigoEmprestimo.isEmpty())
+            throw new IllegalArgumentException("Código de empréstimo inválido!");
+        else
+            codigoEmprestimo = codigoEmprestimo.trim();
+
         for (Emprestimo emprestimo : this.emprestimos)
             if (emprestimo.getCodigoEmprestimo().equals(codigoEmprestimo))
                 return emprestimo;
-        return null; // Retorna null se o empréstimo não for encontrado
+            
+        throw new IllegalArgumentException("Empréstimo não encontrado!");
     }
 
     // Cria um emprestimo novo e adiciona na lista de emprestimos da biblioteca
     public boolean realizarEmprestimo(String codigoEmprestimo, String codigoUsuario, String codigoLivro) {
-        // Busca o usuario
+        if(codigoEmprestimo == null || codigoEmprestimo.isEmpty())
+            throw new IllegalArgumentException("Código de empréstimo inválido!");
+
+        if(codigoUsuario == null || codigoUsuario.isEmpty())
+            throw new IllegalArgumentException("Código de usuário inválido");
+
+        if(codigoLivro == null || codigoLivro.isEmpty())
+            throw new IllegalArgumentException("Código do livro inválido");
+
+        codigoEmprestimo = codigoEmprestimo.trim();
+        codigoUsuario = codigoUsuario.trim();
+        codigoLivro = codigoLivro.trim();
+
         Usuario usuarioEmprestimo = buscarUsuario(codigoUsuario);
+        if(usuarioEmprestimo == null)
+            throw new IllegalArgumentException("Usuário não encontrado!");
+
         // Busca o livro
         Livro livroEmprestado = buscarLivro(codigoLivro);
-
-        if (usuarioEmprestimo != null && livroEmprestado != null && livroEmprestado.getQuantidadeDisponivel() > 0) {
+        if(livroEmprestado == null)
+            throw new IllegalArgumentException("Livro não encontrado!");
+        
+        if (livroEmprestado.getQuantidadeDisponivel() > 0) {
             // Classe dos emprestimos
             LocalDate dataAtual = LocalDate.now();
             // Adiciona 30 dias à data atual para definir a data de devolução
@@ -142,12 +179,16 @@ public class Biblioteca {
             return true;
         }
 
-        return false;
+        
+        throw new IllegalArgumentException("Livro indisponível para empréstimo!");
     }
 
-    public void realizarDevolucao(String codigoEmprestimo) { // , String codigoUsuario, String codigoLivro
+    public void realizarDevolucao(String codigoEmprestimo) {
         Emprestimo emprestimoDevolucao = buscarEmprestimo(codigoEmprestimo);
-        if (emprestimoDevolucao != null && emprestimoDevolucao.getEmprestado()) {
+        if(emprestimoDevolucao == null)
+            throw new IllegalArgumentException("Emprestimo não encontrado!");
+
+        if (emprestimoDevolucao.getEmprestado()) {
             for(Emprestimo emprestimo : this.emprestimos)
                 if(emprestimo.getCodigoEmprestimo().equals(emprestimoDevolucao.getCodigoEmprestimo())) {
                     emprestimo.setEmprestado(false);
@@ -155,9 +196,11 @@ public class Biblioteca {
                     emprestimo.calculaMulta(emprestimo.getDataDevolucao());
                 }    
             // Incrementa a quantidade disponível do livro devolvido        
-            Livro livroDevolvido = buscarLivro(emprestimoDevolucao.getNumeroLivro());
-            if (livroDevolvido != null)
-                livroDevolvido.devolverLivro();
+            Livro livroDevolvido = buscarLivro(emprestimoDevolucao.getIsbn());
+            if (livroDevolvido == null)
+                throw new IllegalArgumentException("Livro não encontrado!");
+
+            livroDevolvido.devolverLivro();
         }
     }
 }

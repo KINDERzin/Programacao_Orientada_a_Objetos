@@ -1,16 +1,16 @@
 # Projeto de siumulação de bibioteca
 
-No momento é possível emprestar apenas um livro por vez.
-
 - Possiveis atualizações: 
+
+- Para dificultar:
+    5. Faixa etária do livro
+    6. Sessão do livro
+    7. 
+
+- CONLUÍDOS:
     1. Try-Catch
     2. ISBN do livro
     3. Sistema de multas
+    4. Arruamar a (opção) pois se deixa sem valor da exceção
 
-- Para dificultar:
-    4. Arruamr a (opção) pois se deixa sem valor da exceção
-    5. Faixa etária do livro
-
-- CONLUÍDOS:
-
-OBSERVAÇOES:
+OBSERVAÇOES: 

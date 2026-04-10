@@ -111,6 +111,10 @@ public class Emprestimo {
     public double getMulta() {
         return multa;
     }
+    public void setMulta() {
+        if(multa < 0.0)
+            throw new IllegalArgumentException("O valor da multa não pode ser negativo!");
+    }
 
     public void calculaMulta(LocalDate dataAtual) {
         if(dataAtual == null)

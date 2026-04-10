@@ -156,6 +156,7 @@ public class Main {
                             Integer quantidadePaginas, quantidadeDisponivel;
 
                             System.out.println("\n======== CADASTRO DE LIVRO =========\n");
+                           
                             // - Título do livro
                             System.out.println("- Digite o título do livro:");
                             do {
@@ -163,6 +164,7 @@ public class Main {
                                 if (titulo.isEmpty())
                                     System.out.println("Título inválido! Digite novamente.");
                             } while (titulo.isEmpty());
+                            
                             // - Autor(a) do livro
                             System.out.println("- Digite o autor do livro:");
                             do {
@@ -170,6 +172,7 @@ public class Main {
                                 if (autor.isEmpty())
                                     System.out.println("Autor inválido! Digite novamente.");
                             } while (autor.isEmpty());
+                            
                             // - Gênero do livro
                             System.out.println("- Digite o gênero do livro:");
                             do {
@@ -177,6 +180,7 @@ public class Main {
                                 if (genero.isEmpty())
                                     System.out.println("Gênero inválido! Digite novamente.");
                             } while (genero.isEmpty());
+                            
                             // - Editora do livro
                             System.out.println("- Digite a editora do livro:");
                             do {
@@ -184,13 +188,15 @@ public class Main {
                                 if (editora.isEmpty())
                                     System.out.println("Editora inválida! Digite novamente.");
                             } while (editora.isEmpty());
+                            
                             // - Número do cadastro do livro
-                            System.out.println("- Digite o número do livro:");
+                            System.out.println("- Digite o ISBN:");
                             do {
                                 Isbn = leitor.nextLine();
                                 if (Isbn.isEmpty())
                                     System.out.println("Número do livro inválido! Digite novamente.");
                             } while (Isbn.isEmpty());
+                            
                             // - Quantidade de paginas do livro
                             System.out.println("- Digite a quantidade de páginas do livro:");
                             // Loop que garante que a quantidade de paginas seja um inteiro positivo

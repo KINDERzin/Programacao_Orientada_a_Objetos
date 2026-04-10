@@ -1,14 +1,11 @@
 package entidades;
 
-public class Livro 
+public class Livro extends ItemBiblioteca
 {
-    private String Titulo;
     private String Autor;
     private String Genero;
-    private String Editora;
     private String Isbn;
-    private Integer QuantidadePaginas;
-    private Integer QuantidadeDisponivel;
+    private Integer NumeroEdicao;
 
     public Livro(String titulo, String autor, String Genero, String Editora, 
                  String Isbn, Integer QuantidadePaginas, Integer QuantidadeDisponivel)
@@ -23,21 +20,7 @@ public class Livro
     }
 
     // GETTER E SETTERS
-    // TITULO
-    public String getTitulo()
-    {
-        return Titulo;
-    }
-    public void setTitulo(String titulo)
-    {
-        if(titulo != null)
-            titulo = titulo.trim();
-
-        if(titulo == null || titulo.isEmpty())
-            throw new IllegalArgumentException("O titulo não foi inserido!");
-
-        this.Titulo = titulo;
-    }
+    
     // AUTOR
     public String getAutor()
     {
@@ -53,6 +36,7 @@ public class Livro
 
         this.Autor = autor;
     }
+    
     // GENERO
     public String getGenero()
     {
@@ -68,22 +52,8 @@ public class Livro
 
         this.Genero = Genero;
     }
-    // EDITORA
-    public String getEditora()
-    {
-        return Editora;
-    }
-    public void setEditora(String Editora)
-    {
-        if(Editora != null)
-            Editora = Editora.trim();
-
-        if(Editora == null || Editora.isEmpty())
-            throw new IllegalArgumentException("A Editora não foi inserida!");
-
-        this.Editora = Editora;
-    }
-    // NUMERO DO LIVRO
+    
+    // ISBN
     public String getIsbn()
     {
         return Isbn;
@@ -98,36 +68,15 @@ public class Livro
 
         this.Isbn = Isbn;
     }
-    // QUANTIDADE DE PAGINAS
-    public Integer getQuantidadePaginas()
-    {
-        return QuantidadePaginas;
-    }
-    public void setQuantidadePaginas(Integer QuantidadePaginas)
-    {
-        if(QuantidadePaginas == null || QuantidadePaginas <= 0)
-            throw new IllegalArgumentException("Número de páginas inválido!");
 
-        this.QuantidadePaginas = QuantidadePaginas;
+    // NÚMERO DE EDIÇÃO
+    public Integer getNumeroEdicao() {
+        return this.NumeroEdicao;
     }
-    // QUANTIDADE DISPONIVEL
-    public Integer getQuantidadeDisponivel()
-    {
-        return QuantidadeDisponivel;
-    }
-    public void setQuantidadeDisponivel(Integer QuantidadeDisponivel)
-    {
-        if(QuantidadeDisponivel == null || QuantidadeDisponivel < 0)
-            throw new IllegalArgumentException("Quantidade de livros diponíveis é inválida!");
+    public void setNumeroEdicao(Integer edicao) {
+        if( edicao == null)
+            throw new IllegalArgumentException("Edição inválida!");
 
-        this.QuantidadeDisponivel = QuantidadeDisponivel;
-    }  
-    public void emprestarLivro()
-    {
-            this.QuantidadeDisponivel--;
-    }
-    public void devolverLivro()
-    {
-            this.QuantidadeDisponivel++;
+        this.NumeroEdicao = edicao;
     }
 }

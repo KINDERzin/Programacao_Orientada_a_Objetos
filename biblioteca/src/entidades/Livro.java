@@ -14,7 +14,7 @@ public class Livro extends ItemBiblioteca
         setAutor                (autor);
         setGenero               (Genero);
         setEditora              (Editora);
-        setIsbn          (Isbn);
+        setIsbn                 (Isbn);
         setQuantidadePaginas    (QuantidadePaginas);
         setQuantidadeDisponivel (QuantidadeDisponivel);
     }

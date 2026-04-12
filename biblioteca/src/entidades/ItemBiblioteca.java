@@ -1,16 +1,16 @@
 package entidades;
 
 public class ItemBiblioteca {
-    private String Titulo;
-    private String Editora;
-    private Integer AnoPublicacao;
-    public Integer QuantidadeDisponivel;
-    public Integer QuantidadePaginas;
+    private String titulo;
+    private String editora;
+    private Integer anoPublicacao;
+    public Integer quantidadeDisponivel;
+    public Integer quantidadePaginas;
 
     // TÍTULO
     public String getTitulo()
     {
-        return Titulo;
+        return titulo;
     }
     public void setTitulo(String titulo)
     {
@@ -20,13 +20,13 @@ public class ItemBiblioteca {
         if(titulo == null || titulo.isEmpty())
             throw new IllegalArgumentException("O titulo não foi inserido!");
 
-        this.Titulo = titulo;
+        this.titulo = titulo;
     }
 
     // Editora
     public String getEditora()
     {
-        return Editora;
+        return editora;
     }
     public void setEditora(String editora)
     {
@@ -36,15 +36,15 @@ public class ItemBiblioteca {
         if(editora != null)
             editora = editora.trim();
 
-        this.Editora = editora;
+        this.editora = editora;
     }
 
     // ANO PUBLICAÇAO
     public Integer getAnoPublicacao() {
-        return this.AnoPublicacao;
+        return this.anoPublicacao;
     }
     public void setAnoPublicacao(Integer anoPublicado) {
-        this.AnoPublicacao = anoPublicado;
+        this.anoPublicacao = anoPublicado;
     }
     
     // QUANTIDADE DE PÁGINAS
@@ -52,34 +52,34 @@ public class ItemBiblioteca {
     {
         return quantidadePaginas;
     }
-    public void setQuantidadePaginas(Integer QuantidadePaginas)
+    public void setQuantidadePaginas(Integer quantidadePaginas)
         {
-            if(QuantidadePaginas == null || QuantidadePaginas <= 0)
+            if(quantidadePaginas == null || quantidadePaginas <= 0)
                 throw new IllegalArgumentException("Número de páginas inválido!");
     
-            this.quantidadePaginas = QuantidadePaginas;
+            this.quantidadePaginas = quantidadePaginas;
         }
 
     //QUANTIDADE DISPONÍVEL
     public Integer getQuantidadeDisponivel()
     {
-        return QuantidadeDisponivel;
+        return quantidadeDisponivel;
     }
     public void setQuantidadeDisponivel(Integer quantidadeDisponivel)
     {
         if(quantidadeDisponivel == null || quantidadeDisponivel < 0)
             throw new IllegalArgumentException("Quantidade de livros diponíveis é inválida!");
 
-        this.QuantidadeDisponivel = quantidadeDisponivel;
+        this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
     // REALIZAÇÃO EMPRÉSTIMO OU DEVOLUÇAO
     public void realizarEmprestimo()
     {
-        this.QuantidadeDisponivel--;
+        this.quantidadeDisponivel--;
     }
     public void realizarDevolucao()
     {
-        this.QuantidadeDisponivel++;
+        this.quantidadeDisponivel++;
     }
 }

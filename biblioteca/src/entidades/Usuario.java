@@ -8,13 +8,15 @@ public class Usuario {
     private String Nome;
     private String CodigoUsuario;
     private LocalDate DataNascimento;
+    private TipoUsuario tipoUsuario;
     // Armazena apenas o codigo/id de cada emrpestimo feito
     private List<String> codigoEmprestimos;
 
-    public Usuario(String nome, String codigoUsuario, LocalDate dataNascimento) {
+    public Usuario(String nome, String codigoUsuario, LocalDate dataNascimento, TipoUsuario tipo) {
         setNome(nome);
         setCodigoUsuario(codigoUsuario);
         setDataNascimento(dataNascimento);
+        setTipoUsuario(tipo);
         codigoEmprestimos = new ArrayList<>();
     }
 
@@ -81,5 +83,13 @@ public class Usuario {
             throw new IllegalArgumentException("Este código de emprestimo esté registrado para este usuario!");
         
         codigoEmprestimos.add(codigoEmprestimo);
+    }
+
+    // TIPO USUÁRIO
+    public TipoUsuario getTipoUsuario() {
+        return this.tipoUsuario;
+    }
+    public void setTipoUsuario(TipoUsuario tipoUser) {
+        this.tipoUsuario = tipoUser;
     }
 }

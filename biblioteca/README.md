@@ -1,14 +1,12 @@
 # Projeto de siumulação de bibioteca
 
-ETAPA ATUAL: Aula 03 - Exercício 04
+ETAPA ATUAL: Aula 03 - Exercício 06
 OBSERVAÇOES: CONFERIR TUDO, LER LINHA A LINHA 
 
 - Possiveis atualizações: 
 
 - Para dificultar:
-    5. Faixa etária do livro
-    6. Sessão do livro
-    7. 
+    5. Sessão do livro
 
 - CONLUÍDOS:
     1. Try-Catch

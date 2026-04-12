@@ -5,6 +5,11 @@ public class Revista extends ItemBiblioteca{
     private String TemaPrincipal; 
     private Integer NumeroEdicao;
 
+    public Revista(String issn, String temaPrincipal, Integer numeroEdicao) {
+        setIssn(issn);
+        setTemaPrincipal(temaPrincipal);
+        setNumeroEdicao(numeroEdicao); 
+    }
     // ISSN
     public String getIssn()
     {

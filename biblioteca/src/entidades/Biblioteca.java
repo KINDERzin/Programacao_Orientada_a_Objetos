@@ -32,17 +32,16 @@ public class Biblioteca {
         adicionarUsuario("Diego Santos", "U004", criarData(1988, 2, 10));
         adicionarUsuario("Elisa Ferreira", "U005", criarData(1995, 1, 5));
     }
-
     public static LocalDate criarData(int ano, int mes, int dia) {
         return LocalDate.of(ano, mes, dia);
     }
 
     // GET SETTERS
+
     // LIVROS
     public List<Livro> getLivros() {
         return livros;
     }
-
     public boolean adicionarLivro(String titulo, String autor, String genero, String editora, String Isbn,
             Integer quantidadePaginas, Integer quantidadeDisponivel) {
                 
@@ -56,7 +55,6 @@ public class Biblioteca {
         // Retorna TRUE se o livro for adicionado com sucesso
         return true;
     }
-
     public boolean removerLivro(String Isbn) {
         if(Isbn == null || Isbn.isEmpty())
             throw new IllegalArgumentException("IBNS inválido!");
@@ -71,7 +69,6 @@ public class Biblioteca {
             }
         throw new IllegalArgumentException("Livro não encontrado!");
     }
-
     public Livro buscarLivro(String Isbn) {
         if(Isbn == null || Isbn.isEmpty())
             throw new IllegalArgumentException("Isbn inválido!");
@@ -89,7 +86,6 @@ public class Biblioteca {
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
-
     public boolean adicionarUsuario(String nome, String registro, LocalDate dataNascimento) {
         Usuario usuario = new Usuario(nome, registro, dataNascimento);
 
@@ -101,7 +97,6 @@ public class Biblioteca {
         // Retorna TRUE se o usuário for adicionado com sucesso
         return true;
     }
-
     public boolean removerUsuario(String codigoUsuario) {
         for (Usuario usuarioAtual : this.usuarios)
             if (usuarioAtual.getCodigoUsuario().equals(codigoUsuario)) {
@@ -112,7 +107,6 @@ public class Biblioteca {
         // Retorna FALSE se o usuário não for encontrado
         throw new IllegalArgumentException("Usuário não encontrado");
     }
-
     public Usuario buscarUsuario(String codigoUsuario) {
         if(codigoUsuario == null || codigoUsuario.isEmpty())
             throw new IllegalArgumentException("O codigo de usuário inválido!");
@@ -125,6 +119,7 @@ public class Biblioteca {
         throw new IllegalArgumentException("Usuário não encontrado!");
     }
 
+    // EMPRÉSTIMOS
     public List<Emprestimo> getEmprestimos() {
         return emprestimos;
     }
@@ -140,7 +135,6 @@ public class Biblioteca {
             
         throw new IllegalArgumentException("Empréstimo não encontrado!");
     }
-
     // Cria um emprestimo novo e adiciona na lista de emprestimos da biblioteca
     public boolean realizarEmprestimo(String codigoEmprestimo, String codigoUsuario, String codigoLivro) {
         if(codigoEmprestimo == null || codigoEmprestimo.isEmpty())
@@ -165,24 +159,21 @@ public class Biblioteca {
         if(livroEmprestado == null)
             throw new IllegalArgumentException("Livro não encontrado!");
         
-        if (livroEmprestado.getQuantidadeDisponivel() > 0) {
-            // Classe dos emprestimos
-            LocalDate dataAtual = LocalDate.now();
-            // Adiciona 30 dias à data atual para definir a data de devolução
-            LocalDate dataDevolucao = dataAtual.plusDays(30); // Adiciona 30 dias à data atual
-
-            Emprestimo emprestimo = new Emprestimo(String.valueOf(emprestimos.size() + 1), codigoUsuario, codigoLivro, dataAtual, dataDevolucao, true);
-            // Adiciona o emprestimo à List de emprestimos da biblioteca
-            emprestimos.add(emprestimo);
-            livroEmprestado.emprestarLivro();
-
-            return true;
-        }
-
+        if (livroEmprestado.getQuantidadeDisponivel() < 0) 
+            throw new IllegalArgumentException("Livro indisponível para empréstimo!");
         
-        throw new IllegalArgumentException("Livro indisponível para empréstimo!");
-    }
+        // Classe dos emprestimos
+        LocalDate dataAtual = LocalDate.now();
+        // Adiciona 30 dias à data atual para definir a data de devolução
+        LocalDate dataDevolucao = dataAtual.plusDays(30); // Adiciona 30 dias à data atual
 
+        Emprestimo emprestimo = new Emprestimo(String.valueOf(emprestimos.size() + 1), codigoUsuario, codigoLivro, dataAtual, dataDevolucao, true);
+        // Adiciona o emprestimo à List de emprestimos da biblioteca
+        emprestimos.add(emprestimo);
+        livroEmprestado.realizarEmprestimo();
+
+        return true;
+    }
     public void realizarDevolucao(String codigoEmprestimo) {
         Emprestimo emprestimoDevolucao = buscarEmprestimo(codigoEmprestimo);
         if(emprestimoDevolucao == null)
@@ -200,7 +191,7 @@ public class Biblioteca {
             if (livroDevolvido == null)
                 throw new IllegalArgumentException("Livro não encontrado!");
 
-            livroDevolvido.devolverLivro();
+            livroDevolvido.realizarDevolucao();
         }
     }
 }

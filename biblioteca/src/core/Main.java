@@ -22,19 +22,23 @@ public class Main {
         do {
 
             System.out.println("\n==== BEM VINDO(A) À BIBLIOTECA ====\n");
-            System.out.println(" 1. Listar Livros");
+            System.out.println(" 1. Listar todos itens de leitura");
             System.out.println(" 2. Listar Livros disponíveis");
-            System.out.println(" 3. Listar Livros indisponíveis");
-            System.out.println(" 4. Adicionar Livro");
-            System.out.println(" 5. Apagar Livro");
-            System.out.println(" 6. Listar Usuários");
-            System.out.println(" 7. Adicionar Usuário");
-            System.out.println(" 8. Apagar Usuário");
-            System.out.println(" 9. Listar Emprestimos ativos");
-            System.out.println(" 10. Listar Emprestimos finalizados");
-            System.out.println(" 11. Listar Emprestimo de um Usuario:");
-            System.out.println(" 12. Realizar Empréstimo");
-            System.out.println(" 13. Realizar Devolução");
+            System.out.println(" 3. Listar Teses disponíveis");
+            System.out.println(" 4. Listar Revistas disponíveis");
+            System.out.println(" 5. Listar Livros indisponíveis");
+            System.out.println(" 6. Listar Teses indisponíveis");
+            System.out.println(" 7. Listar Revistas indisponíveis");
+            System.out.println(" 8. Adicionar Item");
+            System.out.println(" 9. Apagar Item");
+            System.out.println(" 10. Listar Usuários");
+            System.out.println(" 11. Adicionar Usuário");
+            System.out.println(" 12. Apagar Usuário");
+            System.out.println(" 13. Listar Emprestimos ativos");
+            System.out.println(" 14. Listar Emprestimos finalizados");
+            System.out.println(" 15. Listar Emprestimo de um Usuario:");
+            System.out.println(" 16. Realizar Empréstimo");
+            System.out.println(" 17. Realizar Devolução");
             System.out.println(" 0. Sair");
 
             System.out.println("\n- Insira a opção desejada: ");
@@ -44,8 +48,8 @@ public class Main {
                 try {
                     opcao = Integer.parseInt(leitor.nextLine());
     
-                    if (opcao == null)
-                        System.out.println("Opção inválida! Digite novamente.");
+                    // if (opcao == null)
+                    //     System.out.println("Opção inválida! Digite novamente.");
                 } catch (NumberFormatException e) {
                     // Qualquer tipo de erro na conversão do valor para inteiro, o projeto não quebra, e a pessoa é avisada do erro
                     System.out.println("Opção inválida! Digite um número inteiro.");
@@ -58,7 +62,7 @@ public class Main {
             try {
                 switch (opcao) {
 
-                    case 1: // === LISTA OS LIVROS ===
+                    case 1:  // === LISTA OS LIVROS ===
                     {
                             System.out.println("\n========= LISTA DE LIVROS =========\n");
                             // Verifica se a lista de livros está vazia
@@ -84,7 +88,7 @@ public class Main {
 
                         break;
                     }
-                    case 2: // === LISTA OS LIVROS DISPONÍVEIS PARA EMPRÉSTIMO ===
+                    case 2:  // === LISTA OS LIVROS DISPONÍVEIS PARA EMPRÉSTIMO ===
                     {
                             boolean todosIndisponiveis;
 
@@ -119,7 +123,7 @@ public class Main {
 
                         break;
                     }
-                    case 3: // === LISTA OS LIVROS INDISPONÍVEIS PARA EMPRÉSTIMO ===
+                    case 3:  // === LISTA OS LIVROS INDISPONÍVEIS PARA EMPRÉSTIMO ===
                     {
                             boolean todosDisponeis;
                             System.out.println("\n========= LIVROS INDISPONÍVEIS PARA EMPRÉSTIMO =========\n");
@@ -150,7 +154,7 @@ public class Main {
                                 });
                         break;
                     } 
-                    case 4: // === ADICIONA UM LIVRO ===
+                    case 4:  // === ADICIONA UM LIVRO ===
                     {
                             String titulo, autor, genero, editora, Isbn;
                             Integer quantidadePaginas, quantidadeDisponivel;
@@ -219,7 +223,7 @@ public class Main {
                             System.out.println("Livro adicionado com sucesso!");
                         break;
                     }
-                    case 5: // === APAGA O REGISTRO DO LIVRO ===
+                    case 5:  // === APAGA O REGISTRO DO LIVRO ===
                     {
                             String Isbn;
 
@@ -233,7 +237,7 @@ public class Main {
                             System.out.println("Livro não encontrado!");
                         break;
                     }
-                    case 6: // === LISTA OS USUARIOS CADASTRADOS ===
+                    case 6:  // === LISTA OS USUARIOS CADASTRADOS ===
                     {
                             System.out.println("=== LISTA DE USUÁRIOS ===");
                             if (biblioteca.getUsuarios().isEmpty()) {
@@ -257,7 +261,7 @@ public class Main {
                             }
                         break;
                     }
-                    case 7: // === ADICIONA UM USUARIO ===
+                    case 7:  // === ADICIONA UM USUARIO ===
                     {
                             String nome, registro, dataNascimento;
                             LocalDate dataLocal;
@@ -280,7 +284,7 @@ public class Main {
                             System.out.println("Usuário adicionado com sucesso!");
                         break;
                     }
-                    case 8: // === APAGA O REGISTRO DO USUÁRIO ===
+                    case 8:  // === APAGA O REGISTRO DO USUÁRIO ===
                     {
                             String registro;
 
@@ -294,7 +298,7 @@ public class Main {
                             System.out.println("\nUsuário não encontrado!");
                         break;
                     }
-                    case 9: // === LISTA OS EMPRÉSTIMOS ATIVOS ===
+                    case 9:  // === LISTA OS EMPRÉSTIMOS ATIVOS ===
                     {
                             System.out.println("\n=== LISTA DE EMPRÉSTIMOS ATIVOS ===\n");
                             if (biblioteca.getEmprestimos().isEmpty()) {
@@ -337,7 +341,7 @@ public class Main {
                             }
                         break;
                     }
-                    case 11:
+                    case 11: // === LISTA OS EMPRÉSTIMO DE UM USUÁRIO ===
                     {
                             String codigoUsuario;
                             Usuario usuarioAtual;
@@ -478,7 +482,7 @@ public class Main {
                             biblioteca.realizarDevolucao(codigoDevolucao);
                             // Atualiza a quantidade de livros disponíveis na biblioteca
                             livroDevolvido = biblioteca.buscarLivro(codigoLivro);
-                            livroDevolvido.devolverLivro();
+                            livroDevolvido.realizarDevolucao();
                             // Remove o código do empréstimo da lista de empréstimos do usuário
                             usuarioDevolucao = biblioteca.buscarUsuario(codigoUsuario);
                             usuarioDevolucao.getCodigoEmprestimos().remove(codigoLivro);
@@ -493,7 +497,7 @@ public class Main {
                         
                         break;
                     }
-                    case 0: // === ENCERRA O PROGRAMA ===
+                    case 0:  // === ENCERRA O PROGRAMA ===
                     {
                         System.out.println("Saindo...");
                         break;

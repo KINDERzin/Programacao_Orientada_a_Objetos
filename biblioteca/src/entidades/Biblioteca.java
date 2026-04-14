@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Biblioteca {
-    private List<Livro> livros;
+    private List<ItemBiblioteca> acervo;
     private List<Usuario> usuarios;
     private List<Emprestimo> emprestimos;
 
     public Biblioteca() {
-        this.livros = new ArrayList<>();
+        this.acervo = new ArrayList<>();
         this.usuarios = new ArrayList<>();
         this.emprestimos = new ArrayList<>();
 
@@ -18,125 +18,142 @@ public class Biblioteca {
     }
 
     public void InitializeLibrary() {
-        // Adiciona livros à biblioteca
-        adicionarLivro("O Senhor dos Anéis", "J.R.R. Tolkien", "Fantasia", "HarperCollins", "001", 1178, 5);
-        adicionarLivro("Harry Potter e a Pedra Filosofal", "J.K. Rowling", "Fantasia", "Rocco", "002", 309, 3);
-        adicionarLivro("1984", "George Orwell", "Distopia", "Companhia das Letras", "003", 328, 4);
-        adicionarLivro("O Pequeno Príncipe", "Antoine de Saint-Exupéry", "Fábula", "Agir", "004", 96, 2);
-        adicionarLivro("A Guerra dos Tronos", "George R.R. Martin", "Fantasia Épica", "Leya", "005", 694, 6);
+        // LIVROS
+        Livro livro1 = new Livro("L001", "O Senhor dos Anéis", "J.R.R. Tolkien", 1954, 184, 38, "Klebinho", "Fantasia", "978-0544003415", 1);
+        Livro livro2 = new Livro("L002", "1984", "George Orwell", 1949, 328, 20, "Klebinho", "Distopia", "978-0451524935", 1);
+        Livro livro3 = new Livro("L003", "Dom Casmurro", "Machado de Assis", 1899, 256, 15, "Klebinho", "Romance", "978-8520927610", 1);
+        Livro livro4 = new Livro("L004", "O Pequeno Príncipe", "Antoine de Saint-Exupéry", 1943, 96, 25, "Klebinho", "Fábula", "978-0156012195", 1);
+        Livro livro5 = new Livro("L005", "A Revolução dos Bichos", "George Orwell", 1945, 112, 30, "Klebinho", "Satira", "978-0451526342", 1);
+        // REVISTAS
+        Revista revista1 = new Revista("R001", "Revista Ciência Hoje", "Sociedade Brasileira para o Progresso da Ciência", 2023, 50, 10, "1234-5679", "Ciência", 1);
+        Revista revista2 = new Revista("R002", "Revista Superinteressante", "Editora Abril", 2023, 60, 15, "9876-5432", "Curiosidades", 1);
+        Revista revista3 = new Revista("R003", "Revista National Geographic", "National Geographic Society", 2023, 80, 20, "5678-1234", "Natureza", 1);
+        Revista revista4 = new Revista("R004", "Revista Veja", "Editora Abril", 2023, 40, 12, "4321-8765", "Notícias", 1);
+        Revista revista5 = new Revista("R005", "Revista Galileu", "Editora Globo", 2023, 70, 18, "8765-4321", "Tecnologia", 1);
+        // TESES
+        Tese tese1 = new Tese("T001", "A Influência da Literatura na Formação do Pensamento Crítico", "Universidade de São Paulo", 2020, 200, 3, "Jozimar Alvez", "Jairo Dallas", "Machime Learning");
+        Tese tese2 = new Tese("T002", "O Impacto das Redes Sociais na Saúde Mental dos Jovens", "Universidade Estadual de Campinas", 2021, 150, 2, "Maria Fernanda", "Carlos Eduardo", "Psicologia");
+        Tese tese3 = new Tese("T003", "A Evolução da Inteligência Artificial e suas Implicações Éticas", "Universidade Federal do Rio de Janeiro", 2022, 180, 4, "Lucas Pereira", "Fernanda Costa", "Ética em Tecnologia");
+        Tese tese4 = new Tese("T004", "O Papel da Educação na Redução da Desigualdade Social", "Universidade de Brasília", 2023, 220, 5, "Ana Clara", "Ricardo Alves", "Educação e Sociedade");
+        Tese tese5 = new Tese("T005", "A Sustentabilidade na Indústria da Moda: Desafios e Oportunidades", "Universidade Federal de Minas Gerais", 2024, 160, 3, "Bruno Costa", "Mariana Silva", "Sustentabilidade e Moda");
+        // ALUNOS
+        Aluno aluno1 = new Aluno("Alice Silva", "U001", "CCOMP");
+        Aluno aluno2 = new Aluno("Bruno Costa", "U002", "CCONT");
+        Aluno aluno3 = new Aluno("Carla Mendes", "U003", "MEDICINA");
+        Aluno aluno4 = new Aluno("Diego Santos", "U004", "ADMIN");
+        Aluno aluno5 = new Aluno("Elisa Ferreira", "U005", "DIREITO");
+        // PROFESSORES
+        Professor professor1 = new Professor("Dr. Fernando Oliveira", "P001", "CCOMP", "Doutorado em Ciência da Computação");
+        Professor professor2 = new Professor("Dra. Gabriela Lima", "P002", "CCONT", "Mestrado em Contabilidade");
+        Professor professor3 = new Professor("Dr. Henrique Souza", "P003", "MEDICINA", "Doutorado em Medicina");
+        Professor professor4 = new Professor("Dra. Isabela Rocha", "P004", "ADMIN", "Mestrado em Administração");
+        Professor professor5 = new Professor("Dr. João Pereira", "P005", "DIREITO", "Doutorado em Direito");
+        // SERVIDORES ADMINISTRATIVOS
+        ServidorAdministrativo servidor1 = new ServidorAdministrativo("Carlos Eduardo", "S001", "Bibliotecário", "Responsável pelo acervo");
+        ServidorAdministrativo servidor2 = new ServidorAdministrativo("Mariana Silva", "S002", "Atendimento", "Responsável pelo atendimento ao público");
+        ServidorAdministrativo servidor3 = new ServidorAdministrativo("Ricardo Alves", "S003", "Tecnologia", "Responsável pela manutenção dos sistemas");
+        ServidorAdministrativo servidor4 = new ServidorAdministrativo("Fernanda Costa", "S004", "Administração", "Responsável pela gestão administrativa");
+        ServidorAdministrativo servidor5 = new ServidorAdministrativo("Lucas Pereira", "S005", "Segurança", "Responsável pela segurança da biblioteca");
+
+        // Adiciona itens à biblioteca
+        adicionarItem(livro1);
+        adicionarItem(livro2);
+        adicionarItem(livro3);
+        adicionarItem(livro4);
+        adicionarItem(livro5);
+        adicionarItem(revista1);
+        adicionarItem(revista2);
+        adicionarItem(revista3);
+        adicionarItem(revista4);
+        adicionarItem(revista5);
+        adicionarItem(tese1);
+        adicionarItem(tese2);
+        adicionarItem(tese3);
+        adicionarItem(tese4);
+        adicionarItem(tese5);
 
         // Adiciona usuários à biblioteca
-        adicionarUsuario("Alice Silva", "U001", criarData(1990, 5, 15));
-        adicionarUsuario("Bruno Costa", "U002", criarData(1998, 7, 22));
-        adicionarUsuario("Carla Mendes", "U003", criarData(1992, 10, 30));
-        adicionarUsuario("Diego Santos", "U004", criarData(1988, 2, 10));
-        adicionarUsuario("Elisa Ferreira", "U005", criarData(1995, 1, 5));
+        adicionarUsuario(aluno1);
+        adicionarUsuario(aluno2);
+        adicionarUsuario(aluno3);
+        adicionarUsuario(aluno4);
+        adicionarUsuario(aluno5);
+        adicionarUsuario(professor1);
+        adicionarUsuario(professor2);
+        adicionarUsuario(professor3);
+        adicionarUsuario(professor4);
+        adicionarUsuario(professor5);
+        adicionarUsuario(servidor1);
+        adicionarUsuario(servidor2);
+        adicionarUsuario(servidor3);
+        adicionarUsuario(servidor4);
+        adicionarUsuario(servidor5);
     }
-    public static LocalDate criarData(int ano, int mes, int dia) {
-        return LocalDate.of(ano, mes, dia);
-    }
-
-    // GET SETTERS
 
     // LIVROS
-    public List<Livro> getLivros() {
-        return livros;
+    public List<ItemBiblioteca> getItens() {
+        return acervo;
     }
-    public boolean adicionarLivro(String titulo, String autor, String genero, String editora, String Isbn,
-            Integer quantidadePaginas, Integer quantidadeDisponivel) {
-                
-        for (Livro livroAtual : this.livros)
-            if (livroAtual.getIsbn().equals(Isbn))
-                throw new IllegalArgumentException("O Livro " + Isbn + " já foi cadastrado!");
-                    
-        Livro livro = new Livro(titulo, autor, genero, editora, Isbn, quantidadePaginas, quantidadeDisponivel);
+    public void  adicionarItem(ItemBiblioteca NovoItem) {
+        if (acervo.stream().anyMatch(itemAtual -> itemAtual.getCodigo().equalsIgnoreCase(NovoItem.getCodigo())))
+            throw new IllegalArgumentException("O item já possui cadastro!");
         
-        this.livros.add(livro);
-        // Retorna TRUE se o livro for adicionado com sucesso
-        return true;
+        acervo.add(NovoItem);
     }
-    public boolean removerLivro(String Isbn) {
-        if(Isbn == null || Isbn.isEmpty())
-            throw new IllegalArgumentException("IBNS inválido!");
-        
-        Isbn = Isbn.trim();
-
-        for (Livro livroAtual : this.livros)
-            if (livroAtual.getIsbn().equals(Isbn)) {
-                this.livros.remove(livroAtual.getIsbn());
-                // Retorna TRUE se o livro for encontrado e removido
-                return true;
-            }
-        throw new IllegalArgumentException("Livro não encontrado!");
+    public void removerItem(String Codigo) {
+        // Não precisa de verificação pois ele Dependo do buscarItem, que lança um erro caso não encontre o item
+        ItemBiblioteca itemRemovido = buscarItem(Codigo);
+        acervo.remove(itemRemovido);
     }
-    public Livro buscarLivro(String Isbn) {
-        if(Isbn == null || Isbn.isEmpty())
-            throw new IllegalArgumentException("Isbn inválido!");
+    public ItemBiblioteca buscarItem(String Codigo) {
+        if(Codigo == null || Codigo.trim().isEmpty())
+            throw new IllegalArgumentException("Código inválido!");
 
-        Isbn = Isbn.trim();
-
-        for (Livro livro : this.livros)
-            if (livro.getIsbn().equals(Isbn))
-                return livro;
-     
-        throw new IllegalArgumentException("Livro não encontrado!"); 
+        return getItens().stream()
+            .filter(livro -> livro.getCodigo().equals(Codigo.trim()))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Item não encontrado!"));
     }
 
     // USUARIOS
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
-    public boolean adicionarUsuario(String nome, String registro, LocalDate dataNascimento) {
-        Usuario usuario = new Usuario(nome, registro, dataNascimento);
+    public void adicionarUsuario(Usuario NovoUsuario) {
+        if (usuarios.stream().anyMatch(usuarioAtual -> usuarioAtual.getCodigoUsuario().equalsIgnoreCase(NovoUsuario.getCodigoUsuario())))
+            throw new IllegalArgumentException("O usuário já possui cadastro!");
 
-        for (Usuario usuarioAtual : this.usuarios)
-            if (usuarioAtual.getCodigoUsuario().equals(usuario.getCodigoUsuario()))
-                throw new IllegalArgumentException("O usuário já possui cadastro");    
+        usuarios.add(NovoUsuario);
+    }
+    public void removerUsuario(String CodigoUsuario) {
+        Usuario usuarioRemovido = buscarUsuario(CodigoUsuario);
+        usuarios.remove(usuarioRemovido);
+    }
+    public Usuario buscarUsuario(String CodigoUsuario) {
+        if(CodigoUsuario == null || CodigoUsuario.trim().isEmpty())
+            throw new IllegalArgumentException("Código de usuário inválido!");
 
-        this.usuarios.add(usuario);
-        // Retorna TRUE se o usuário for adicionado com sucesso
-        return true;
-    }
-    public boolean removerUsuario(String codigoUsuario) {
-        for (Usuario usuarioAtual : this.usuarios)
-            if (usuarioAtual.getCodigoUsuario().equals(codigoUsuario)) {
-                this.usuarios.remove(usuarioAtual);
-                // Retorna TRUE se o usuário for encontrado e removido
-                return true;
-            }
-        // Retorna FALSE se o usuário não for encontrado
-        throw new IllegalArgumentException("Usuário não encontrado");
-    }
-    public Usuario buscarUsuario(String codigoUsuario) {
-        if(codigoUsuario == null || codigoUsuario.isEmpty())
-            throw new IllegalArgumentException("O codigo de usuário inválido!");
-        else
-            codigoUsuario = codigoUsuario.trim();
-        for (Usuario usuario : this.usuarios)
-            if (usuario.getCodigoUsuario().equals(codigoUsuario))
-                return usuario;
-        
-        throw new IllegalArgumentException("Usuário não encontrado!");
+        return getUsuarios().stream()
+            .filter(usuario -> usuario.getCodigoUsuario().equals(CodigoUsuario.trim()))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado!"));
     }
 
     // EMPRÉSTIMOS
     public List<Emprestimo> getEmprestimos() {
         return emprestimos;
     }
-    public Emprestimo buscarEmprestimo(String codigoEmprestimo) {
-        if (codigoEmprestimo == null || codigoEmprestimo.isEmpty())
+    public Emprestimo buscarEmprestimo(String CodigoEmprestimo) {
+        if (CodigoEmprestimo == null || CodigoEmprestimo.trim().isEmpty())
             throw new IllegalArgumentException("Código de empréstimo inválido!");
-        else
-            codigoEmprestimo = codigoEmprestimo.trim();
 
-        for (Emprestimo emprestimo : this.emprestimos)
-            if (emprestimo.getCodigoEmprestimo().equals(codigoEmprestimo))
-                return emprestimo;
-            
-        throw new IllegalArgumentException("Empréstimo não encontrado!");
+        return getEmprestimos().stream()
+            .filter(emprestimo -> emprestimo.getCodigoEmprestimo().equals(CodigoEmprestimo.trim()))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Empréstimo não encontrado!"));
     }
     // Cria um emprestimo novo e adiciona na lista de emprestimos da biblioteca
-    public boolean realizarEmprestimo(String codigoEmprestimo, String codigoUsuario, String codigoLivro) {
+    public void realizarEmprestimo(String codigoEmprestimo, String codigoUsuario, String codigoLivro) {
         if(codigoEmprestimo == null || codigoEmprestimo.isEmpty())
             throw new IllegalArgumentException("Código de empréstimo inválido!");
 
@@ -155,7 +172,8 @@ public class Biblioteca {
             throw new IllegalArgumentException("Usuário não encontrado!");
 
         // Busca o livro
-        Livro livroEmprestado = buscarLivro(codigoLivro);
+        ItemBiblioteca livroEmprestado = buscarItem(codigoLivro);
+
         if(livroEmprestado == null)
             throw new IllegalArgumentException("Livro não encontrado!");
         
@@ -172,7 +190,6 @@ public class Biblioteca {
         emprestimos.add(emprestimo);
         livroEmprestado.realizarEmprestimo();
 
-        return true;
     }
     public void realizarDevolucao(String codigoEmprestimo) {
         Emprestimo emprestimoDevolucao = buscarEmprestimo(codigoEmprestimo);
@@ -187,7 +204,7 @@ public class Biblioteca {
                     emprestimo.calculaMulta(emprestimo.getDataDevolucao());
                 }    
             // Incrementa a quantidade disponível do livro devolvido        
-            Livro livroDevolvido = buscarLivro(emprestimoDevolucao.getIsbn());
+            ItemBiblioteca livroDevolvido = buscarItem(emprestimoDevolucao.getIdLivro());
             if (livroDevolvido == null)
                 throw new IllegalArgumentException("Livro não encontrado!");
 

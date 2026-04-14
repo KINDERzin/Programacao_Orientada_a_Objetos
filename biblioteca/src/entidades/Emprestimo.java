@@ -4,132 +4,112 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Emprestimo {
-    // ID do emprestimo
-    String codigoEmprestimo;
+    String codigoEmprestimo; // ID do emprestimo
     String registroUsuario;
-    String Isbn;
+    String idLivro;
+    double multa;
+    boolean emprestado; // Verifica se ja foi devolvido ou não
     LocalDate dataEmprestimo;
     LocalDate dataDevolucao;
-    // Verifica se ja foi devolvido ou não
-    boolean emprestado;
-    double multa;
 
-    public Emprestimo(String codigoEmprestimo, String registroUsuario, String Isbn, LocalDate dataEmprestimo, LocalDate dataDevolucao, boolean emprestado) {
+    public Emprestimo(String codigoEmprestimo, String registroUsuario, String IdLivro, LocalDate dataEmprestimo, LocalDate dataDevolucao, boolean emprestado) {
         setCodigoEmprestimo(codigoEmprestimo);
         setRegistroUsuario(registroUsuario);
-        setIsbn(Isbn);
+        setIdLivro(IdLivro);
         setDataEmprestimo(dataEmprestimo);
         setDataDevolucao(dataDevolucao);
         setEmprestado(emprestado);
     }
 
-    // --- GETTERS AND SETTERS ---
     // CÓDIGO DO EMPRÉSTIMO
     public String getCodigoEmprestimo() {
-        return codigoEmprestimo;
+        return this.codigoEmprestimo;
     }
-
-    public void setCodigoEmprestimo(String codigoEmprestimo) {
-        if(codigoEmprestimo != null)
-            codigoEmprestimo = codigoEmprestimo.trim();
-
-        if(codigoEmprestimo == null || codigoEmprestimo.isEmpty())
+    public void setCodigoEmprestimo(String CodigoEmprestimo) {
+        if(CodigoEmprestimo == null || CodigoEmprestimo.trim().isEmpty())
             throw new IllegalArgumentException("O código do empréstimo é inválido!");
 
-        this.codigoEmprestimo = codigoEmprestimo;
+        this.codigoEmprestimo = CodigoEmprestimo.trim();
     }
 
     // REGISTRO DO USUÁRIO
     public String getRegistroUsuario() {
-        return registroUsuario;
+        return this.registroUsuario;
     }
-
-    public void setRegistroUsuario(String registroUsuario) {
-        if(registroUsuario != null)
-            registroUsuario = registroUsuario.trim();
-
-        if(registroUsuario == null || registroUsuario.isEmpty())
+    public void setRegistroUsuario(String RegistroUsuario) {
+        if(RegistroUsuario == null || RegistroUsuario.trim().isEmpty())
             throw new IllegalArgumentException("O código de usuário é invalido!");
 
-        this.registroUsuario = registroUsuario;
+        this.registroUsuario = RegistroUsuario.trim();
     }
 
-    // NÚMERO DO LIVRO
-    public String getIsbn() {
-        return Isbn;
+    // ID DO LIVRO
+    public String getIdLivro() {
+        return idLivro;
     }
-
-    public void setIsbn(String Isbn) {
-        if(Isbn != null)
-            Isbn = Isbn.trim();
-
-        if(Isbn == null || Isbn.isEmpty())
+    public void setIdLivro(String IdLivro) {
+        if(IdLivro == null || IdLivro.trim().isEmpty())
             throw new IllegalArgumentException("O número do livro é inválido!");
         
-        this.Isbn = Isbn;
+        this.idLivro = IdLivro.trim();
     }
 
     // DATA EMPRÉSTIMO
     public LocalDate getDataEmprestimo() {
-        return dataEmprestimo;
+        return this.dataEmprestimo;
     }
-
-    public void setDataEmprestimo(LocalDate dataEmprestimo) {
-        if(dataEmprestimo == null)
+    public void setDataEmprestimo(LocalDate DataEmprestimo) {
+        if(DataEmprestimo == null)
             throw new IllegalArgumentException("A data do empréstimo é inválida!");
         
-        if(dataEmprestimo.isBefore(LocalDate.now()))
+        if(DataEmprestimo.isBefore(LocalDate.now()))
             throw new IllegalArgumentException("Não e possivel realizar um empréstimo em uma data futura!");
-        this.dataEmprestimo = dataEmprestimo;
+        
+        this.dataEmprestimo = DataEmprestimo;
     }
 
     // DATA DA DEVOLUÇÃO
     public LocalDate getDataDevolucao() {
-        return dataDevolucao;
+        return this.dataDevolucao;
     }
-
-    public void setDataDevolucao(LocalDate dataDevolucao) {
-        if(dataDevolucao == null || dataDevolucao.isBefore(LocalDate.now()))
+    public void setDataDevolucao(LocalDate DataDevolucao) {
+        if(DataDevolucao == null || DataDevolucao.isBefore(LocalDate.now()))
             throw new IllegalArgumentException("Data de devolução inválida!");
 
-        this.dataDevolucao = dataDevolucao;
+        this.dataDevolucao = DataDevolucao;
     }
 
-    // EMPRESTADO - true or false
+    // EMPRESTADO
     public boolean getEmprestado() {
-        return emprestado;
+        return this.emprestado;
     }
-
-    public void setEmprestado(Boolean emprestado) {
-        if(emprestado == null)
+    public void setEmprestado(Boolean Emprestado) {
+        if(Emprestado == null)
             throw new IllegalArgumentException("E ai, tá emprestado ou não?");
     
-        this.emprestado = emprestado;
+        this.emprestado = Emprestado;
     }
 
     // MULTA
     public double getMulta() {
-        return multa;
+        return this.multa;
     }
-    public void setMulta() {
-        if(multa < 0.0)
-            throw new IllegalArgumentException("O valor da multa não pode ser negativo!");
-    }
-
-    public void calculaMulta(LocalDate dataAtual) {
-        if(dataAtual == null)
+    public void calculaMulta(LocalDate DataAtual) {
+        if(DataAtual == null)
             throw new IllegalArgumentException("Data não inserida");
 
-        if(dataAtual.isBefore(dataEmprestimo))
+        if(DataAtual.isBefore(dataEmprestimo))
             throw new IllegalArgumentException("A data de devolução não pode ser anterior à data de empréstimo!");
 
-        int diasAtraso = (int) ChronoUnit.DAYS.between(dataDevolucao, dataAtual);
+        int diasAtraso = (int) ChronoUnit.DAYS.between(dataDevolucao, DataAtual);
 
-        if (dataAtual.isAfter(dataDevolucao)) {
-            if (dataAtual.isAfter(dataDevolucao) && diasAtraso >= 1 && diasAtraso <= 3)
+        if (DataAtual.isAfter(dataDevolucao)) {
+            if (DataAtual.isAfter(dataDevolucao) && diasAtraso >= 1 && diasAtraso <= 3)
                 this.multa = diasAtraso * 2.0;
-            else
+            if (DataAtual.isAfter(dataDevolucao) && diasAtraso > 3)
                 this.multa = diasAtraso * 5.0;
+            else
+                throw new IllegalArgumentException("Data de devolução inválida!");
         } 
         else
             this.multa = 0.0;

@@ -1,51 +1,46 @@
 package entidades;
 
 public class Revista extends ItemBiblioteca{
-    private String Issn;
-    private String TemaPrincipal; 
-    private Integer NumeroEdicao;
+    private String issn;
+    private String temaPrincipal; 
+    private Integer numeroEdicao;
 
-    public Revista(String issn, String temaPrincipal, Integer numeroEdicao) {
-        setIssn(issn);
-        setTemaPrincipal(temaPrincipal);
-        setNumeroEdicao(numeroEdicao); 
+    public Revista(String CodigoUnico, String Titulo, String Editora, Integer AnoPublicacao, Integer QuantidadePaginas, Integer QuantidadeDisponivel,String Issn, String TemaPrincipal, Integer NumeroEdicao) {
+        super(CodigoUnico, Titulo, Editora, AnoPublicacao, QuantidadePaginas, QuantidadeDisponivel, TipoItemBiblioteca.REVISTA);
+        setIssn(Issn);
+        setTemaPrincipal(TemaPrincipal);
+        setNumeroEdicao(NumeroEdicao);
     }
     // ISSN
-    public String getIssn()
-    {
-        return Issn;
+    public String getIssn() {
+        return issn;
     }
-    public void setIssn(String Issn)
-    {
-        if(Issn != null)
-            Issn = Issn.trim();
-
-        if(Issn == null || Issn.isEmpty())
+    public void setIssn(String Issn) {
+        if(Issn == null || Issn.trim().isEmpty())
             throw new IllegalArgumentException("O número do livro nao foi inserido!");
 
-        this.Issn = Issn;
+        this.issn = Issn.trim();
     }
 
     // TEMA PRINCIPAL
     public String getTemaPrincipal() {
-        return this.TemaPrincipal;
+        return temaPrincipal;
     }
-    public void setTemaPrincipal(String tema) {
-
-        if( tema == null || tema.trim().isEmpty() )
+    public void setTemaPrincipal(String Tema) {
+        if(Tema == null || Tema.trim().isEmpty())
             throw new IllegalArgumentException("O tema da revista inserido não é válido!");
         
-        this.TemaPrincipal = tema; 
+        this.temaPrincipal = Tema.trim(); 
     }
 
     // NÚMERO DE EDIÇÃO
     public Integer getNumeroEdicao() {
-        return this.NumeroEdicao;
+        return numeroEdicao;
     }
-    public void setNumeroEdicao(Integer edicao) {
-        if( edicao == null)
+    public void setNumeroEdicao(Integer Edicao) {
+        if(Edicao == null || Edicao < 0)
             throw new IllegalArgumentException("Edição inválida!");
 
-        this.NumeroEdicao = edicao;
+        this.numeroEdicao = Edicao;
     }
 }

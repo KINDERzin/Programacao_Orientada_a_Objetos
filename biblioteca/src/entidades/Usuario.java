@@ -2,21 +2,20 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 
-public class Usuario {
+public abstract class Usuario {
     private String Nome;
     private String CodigoUsuario;
-    private LocalDate DataNascimento;
+    private Integer limiteEmprestimos;
     private TipoUsuario tipoUsuario;
     // Armazena apenas o codigo/id de cada emrpestimo feito
     private List<String> codigoEmprestimos;
 
-    public Usuario(String nome, String codigoUsuario, LocalDate dataNascimento, TipoUsuario tipo) {
+    public Usuario(String nome, String codigoUsuario, TipoUsuario tipo, Integer limiteEmprestimos) {
         setNome(nome);
         setCodigoUsuario(codigoUsuario);
-        setDataNascimento(dataNascimento);
         setTipoUsuario(tipo);
+        setLimiteEmprestimos(limiteEmprestimos);
         codigoEmprestimos = new ArrayList<>();
     }
 
@@ -25,7 +24,6 @@ public class Usuario {
     public String getNome() {
         return Nome;
     }
-
     public void setNome(String nome) {
         if (nome != null)
             nome = nome.trim();
@@ -40,7 +38,6 @@ public class Usuario {
     public String getCodigoUsuario() {
         return CodigoUsuario;
     }
-
     public void setCodigoUsuario(String codigoUsuario) {
         if (codigoUsuario != null)
             codigoUsuario = codigoUsuario.trim();
@@ -51,27 +48,10 @@ public class Usuario {
         this.CodigoUsuario = codigoUsuario;
     }
 
-    // DATA DE NASCIMENTO
-    public LocalDate getDataNascimento() {
-        return DataNascimento;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento)
-    {
-        if(dataNascimento == null)
-            throw new IllegalArgumentException("Data de nascimento não inserida. Tente novamente!");
-     
-        if(dataNascimento.isAfter(LocalDate.now()))
-            throw new IllegalArgumentException("Data de nascimento invalida. Tente novamente!");
-
-        this.DataNascimento = dataNascimento;
-    }
-
     // CÓDIGOS DOS EMPRÉSTIMOS
     public List<String> getCodigoEmprestimos() {
         return codigoEmprestimos;
     }
-
     public void setCodigoEmprestimos(String codigoEmprestimo) {
         if(codigoEmprestimo != null)
             codigoEmprestimo = codigoEmprestimo.trim();
@@ -91,5 +71,16 @@ public class Usuario {
     }
     public void setTipoUsuario(TipoUsuario tipoUser) {
         this.tipoUsuario = tipoUser;
+    }
+
+    // LIMITE DE EMPRÉSTIMOS
+    public Integer getLimiteEmprestimos() {
+        return this.limiteEmprestimos;
+    }
+    public void setLimiteEmprestimos(Integer limiteEmprestimos) {
+        if (limiteEmprestimos == null || limiteEmprestimos < 0)
+            throw new IllegalArgumentException("Limite de empréstimos inválido. Tente novamente!");
+
+        this.limiteEmprestimos = limiteEmprestimos;
     }
 }

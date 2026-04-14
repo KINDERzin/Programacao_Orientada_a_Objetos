@@ -1,85 +1,113 @@
 package entidades;
 
-public class ItemBiblioteca {
+public abstract class ItemBiblioteca {
+    private String codigoUnico;
     private String titulo;
     private String editora;
     private Integer anoPublicacao;
-    public Integer quantidadeDisponivel;
-    public Integer quantidadePaginas;
+    private Integer quantidadeDisponivel;
+    private Integer quantidadePaginas;
+    private TipoItemBiblioteca tipoItem;
+
+    public ItemBiblioteca(String CodigoUnico, String Titulo, String Editora, Integer AnoPublicacao, Integer QuantidadePaginas, Integer QuantidadeDisponivel, TipoItemBiblioteca tipoItem) {
+        setCodigo(CodigoUnico);
+        setTitulo(Titulo);
+        setEditora(Editora);
+        setAnoPublicacao(AnoPublicacao);
+        setQuantidadePaginas(QuantidadePaginas);
+        setQuantidadeDisponivel(QuantidadeDisponivel);
+        setTipoItem(tipoItem);
+    }
+
+    // CÓDIGO ÚNICO
+    public String getCodigo() {
+        return codigoUnico;
+    }
+    public void setCodigo(String CodigoUnico) {
+        if(CodigoUnico == null || CodigoUnico.trim().isEmpty())
+            throw new IllegalArgumentException("O código único do item é inválido!");
+
+        this.codigoUnico = CodigoUnico.trim();
+    }
 
     // TÍTULO
-    public String getTitulo()
-    {
+    public String getTitulo() {
         return titulo;
     }
-    public void setTitulo(String titulo)
-    {
-        if(titulo != null)
-            titulo = titulo.trim();
-
-        if(titulo == null || titulo.isEmpty())
+    public void setTitulo(String Titulo) {
+        if(Titulo == null || Titulo.trim().isEmpty())
             throw new IllegalArgumentException("O titulo não foi inserido!");
 
-        this.titulo = titulo;
+        this.titulo = Titulo.trim();
     }
 
     // Editora
-    public String getEditora()
-    {
+    public String getEditora() {
         return editora;
     }
-    public void setEditora(String editora)
-    {
-        if(editora == null || editora.isEmpty())
+    public void setEditora(String Editora) {
+        if(Editora == null || Editora.trim().isEmpty())
             throw new IllegalArgumentException("A Editora não foi inserida!");
 
-        if(editora != null)
-            editora = editora.trim();
-
-        this.editora = editora;
+        this.editora = Editora.trim();
     }
 
     // ANO PUBLICAÇAO
     public Integer getAnoPublicacao() {
-        return this.anoPublicacao;
+        return anoPublicacao;
     }
-    public void setAnoPublicacao(Integer anoPublicado) {
-        this.anoPublicacao = anoPublicado;
+    public void setAnoPublicacao(Integer AnoPublicado) {
+        this.anoPublicacao = AnoPublicado;
     }
     
     // QUANTIDADE DE PÁGINAS
-    public Integer getQuantidadePaginas()
-    {
+    public Integer getQuantidadePaginas() {
         return quantidadePaginas;
     }
-    public void setQuantidadePaginas(Integer quantidadePaginas)
-        {
-            if(quantidadePaginas == null || quantidadePaginas <= 0)
-                throw new IllegalArgumentException("Número de páginas inválido!");
-    
-            this.quantidadePaginas = quantidadePaginas;
-        }
+    public void setQuantidadePaginas(Integer QuantidadePaginas) {
+        if(QuantidadePaginas == null || QuantidadePaginas <= 0)
+            throw new IllegalArgumentException("Número de páginas inválido!");
+
+        this.quantidadePaginas = QuantidadePaginas;
+    }
 
     //QUANTIDADE DISPONÍVEL
-    public Integer getQuantidadeDisponivel()
-    {
+    public Integer getQuantidadeDisponivel() {
         return quantidadeDisponivel;
     }
-    public void setQuantidadeDisponivel(Integer quantidadeDisponivel)
-    {
-        if(quantidadeDisponivel == null || quantidadeDisponivel < 0)
+    public void setQuantidadeDisponivel(Integer QuantidadeDisponivel) {
+        if(QuantidadeDisponivel == null || QuantidadeDisponivel < 0)
             throw new IllegalArgumentException("Quantidade de livros diponíveis é inválida!");
 
-        this.quantidadeDisponivel = quantidadeDisponivel;
+        this.quantidadeDisponivel = QuantidadeDisponivel;
     }
 
     // REALIZAÇÃO EMPRÉSTIMO OU DEVOLUÇAO
-    public void realizarEmprestimo()
-    {
-        this.quantidadeDisponivel--;
+    public void realizarEmprestimo() {
+        quantidadeDisponivel--;
     }
-    public void realizarDevolucao()
-    {
-        this.quantidadeDisponivel++;
+    public void realizarDevolucao() {
+        quantidadeDisponivel++;
+    }
+
+    // TIPO DE ITEM
+    public TipoItemBiblioteca getTipoItem() {
+        return tipoItem;
+    }
+    public void setTipoItem(TipoItemBiblioteca tipoItem) {
+        if(tipoItem == null)
+            throw new IllegalArgumentException("O tipo do item é inválido!");
+
+        this.tipoItem = tipoItem;
+    }
+
+    public void ShowData() {
+        System.out.println("Código: " + getCodigo());
+        System.out.println("Título: " + getTitulo());
+        System.out.println("Editora: " + getEditora());
+        System.out.println("Ano de Publicação: " + getAnoPublicacao());
+        System.out.println("Quantidade de Páginas: " + getQuantidadePaginas());
+        System.out.println("Quantidade Disponível: " + getQuantidadeDisponivel());
+        System.out.println("Tipo do Item: " + getTipoItem());
     }
 }

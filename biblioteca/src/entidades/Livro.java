@@ -1,82 +1,61 @@
 package entidades;
 
-public class Livro extends ItemBiblioteca
-{
-    private String Autor;
-    private String Genero;
-    private String Isbn;
-    private Integer NumeroEdicao;
+public class Livro extends ItemBiblioteca {
+    private String autor;
+    private String genero;
+    private String isbn;
+    private Integer numeroEdicao;
 
-    public Livro(String titulo, String autor, String Genero, String Editora, 
-                 String Isbn, Integer QuantidadePaginas, Integer QuantidadeDisponivel)
-    {
-        setTitulo               (titulo);
-        setAutor                (autor);
+    public Livro(String CodigoUnico, String Titulo, String Editora, Integer AnoPublicacao, Integer QuantidadePaginas, Integer QuantidadeDisponivel, String Autor, String Genero,  
+                 String Isbn, Integer NumeroEdicao) {
+        super(CodigoUnico, Titulo, Editora, AnoPublicacao, QuantidadePaginas, QuantidadeDisponivel, TipoItemBiblioteca.LIVRO);
+        setAutor                (Autor);
         setGenero               (Genero);
-        setEditora              (Editora);
         setIsbn                 (Isbn);
-        setQuantidadePaginas    (QuantidadePaginas);
-        setQuantidadeDisponivel (QuantidadeDisponivel);
+        setNumeroEdicao         (NumeroEdicao);
     }
-
-    // GETTER E SETTERS
     
     // AUTOR
-    public String getAutor()
-    {
-        return Autor;
+    public String getAutor() {
+        return autor;
     }
-    public void setAutor(String autor)
-    {
-        if(autor != null)
-            autor = autor.trim();
-
-        if(autor == null || autor.isEmpty())
+    public void setAutor(String Autor) {
+        if(Autor == null || Autor.trim().isEmpty())
             throw new IllegalArgumentException("Nome de autor não inserido!");
 
-        this.Autor = autor;
+        this.autor = Autor.trim();
     }
     
     // GENERO
-    public String getGenero()
-    {
-        return Genero;
+    public String getGenero() {
+        return genero;
     }
-    public void setGenero(String Genero)
-    {
-        if(Genero != null)
-            Genero = Genero.trim();
-    
-        if(Genero == null || Genero.isEmpty())
+    public void setGenero(String Genero) {
+        if(Genero == null || Genero.trim().isEmpty())
             throw new IllegalArgumentException("O gênero do livro não foi inserido!");
 
-        this.Genero = Genero;
+        this.genero = Genero.trim();
     }
     
     // ISBN
-    public String getIsbn()
-    {
-        return Isbn;
+    public String getIsbn() {
+        return isbn;
     }
-    public void setIsbn(String Isbn)
-    {
-        if(Isbn != null)
-            Isbn = Isbn.trim();
+    public void setIsbn(String Isbn) {
+        if(Isbn == null || Isbn.trim().isEmpty())
+            throw new IllegalArgumentException("O número do livro não foi inserido!");
 
-        if(Isbn == null || Isbn.isEmpty())
-            throw new IllegalArgumentException("O número do lvro nao foi inserido!");
-
-        this.Isbn = Isbn;
+        this.isbn = Isbn.trim();
     }
 
     // NÚMERO DE EDIÇÃO
     public Integer getNumeroEdicao() {
-        return this.NumeroEdicao;
+        return this.numeroEdicao;
     }
-    public void setNumeroEdicao(Integer edicao) {
-        if( edicao == null)
+    public void setNumeroEdicao(Integer Edicao) {
+        if(Edicao == null || Edicao < 0)
             throw new IllegalArgumentException("Edição inválida!");
 
-        this.NumeroEdicao = edicao;
+        this.numeroEdicao = Edicao;
     }
 }

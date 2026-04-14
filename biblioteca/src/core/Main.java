@@ -2,14 +2,14 @@
 package core;
 
 // OUTRAS IMPORTAÇÕES NECESSÁRIAS PARA O FUNCIONAMENTO DO PROJETO
-import java.util.Scanner;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-// CLASSES
 import entidades.Biblioteca;
 import entidades.Emprestimo;
 import entidades.Livro;
 import entidades.Usuario;
+import entidades.TipoItemBiblioteca;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -54,7 +54,6 @@ public class Main {
                     // Qualquer tipo de erro na conversão do valor para inteiro, o projeto não quebra, e a pessoa é avisada do erro
                     System.out.println("Opção inválida! Digite um número inteiro.");
                     opcao = null;
-                    continue;
                 }
 
             } while (opcao == null);
@@ -66,12 +65,12 @@ public class Main {
                     {
                             System.out.println("\n========= LISTA DE LIVROS =========\n");
                             // Verifica se a lista de livros está vazia
-                            if (biblioteca.getLivros().isEmpty()) {
+                            if (biblioteca.getItens().isEmpty()) {
                                 System.out.println("- Nenhum livro cadastrado!");
                                 break;
                             }
 
-                            biblioteca.getLivros().stream()
+                                biblioteca.getItens().stream()
                                 .forEach(livro -> {
                                     System.out.println("Número do Livro: " + livro.getIsbn());
                                     System.out.println("Título: " + livro.getTitulo());
@@ -88,6 +87,38 @@ public class Main {
 
                         break;
                     }
+                    case 2:  // === LISTA AS REVISTAS ===
+                    {
+                            System.out.println("\n========= LISTA DE REVISTAS =========\n");
+                            // Verifica se a lista de revistas está vazia
+                            if (biblioteca.getItens().isEmpty()) {
+                                System.out.println("- Nenhuma revista cadastrada!");
+                                break;
+                            }
+
+                                biblioteca.getItens().stream()
+                                .forEach(itemBiblioteca -> { 
+                                    if(itemBiblioteca.getTipoItem() == TipoItemBiblioteca.REVISTA) {
+                                        itemBiblioteca.ShowData();
+                                        System.out.println("Número da Revista: " + itemBiblioteca.getIssn());
+                                        System.out.println("Título: " + itemBiblioteca.getTitulo());
+                                        System.out.println("Autor: " + itemBiblioteca.getAutor());
+                                        System.out.println("Gênero: " + itemBiblioteca.getGenero());
+                                        System.out.println("Editora: " + itemBiblioteca.getEditora());
+                                        System.out.println("Quantidade de Páginas: " + itemBiblioteca.getQuantidadePaginas());
+                                        if (itemBiblioteca.getQuantidadeDisponivel() <= 0)
+                                            System.out.println("Obs: Revista Indisponível para empréstimo!");
+                                        else
+                                            System.out.println("Quantidade Disponível: " + itemBiblioteca.getQuantidadeDisponivel());
+                                        System.out.println("-------------------------");
+                                    }
+                            });
+
+                        break;
+                    }
+                    // === LISTAR REVISTAS ===
+                    // === LISTAR TESES ===
+
                     case 2:  // === LISTA OS LIVROS DISPONÍVEIS PARA EMPRÉSTIMO ===
                     {
                             boolean todosIndisponiveis;
@@ -123,6 +154,8 @@ public class Main {
 
                         break;
                     }
+                    // === LISTA AS REVISTAS DISPONÍVEIS PARA EMPRÉSTIMO ===
+                    // === LISTA AS TESES DISPONÍVEIS PARA EMPRÉSTIMO ===
                     case 3:  // === LISTA OS LIVROS INDISPONÍVEIS PARA EMPRÉSTIMO ===
                     {
                             boolean todosDisponeis;
@@ -154,7 +187,9 @@ public class Main {
                                 });
                         break;
                     } 
-                    case 4:  // === ADICIONA UM LIVRO ===
+                    // === LISTA AS REVISTAS INDISPONÍVEIS PARA EMPRÉSTIMO ===
+                    // === LISTA AS TESES INDISPONÍVEIS PARA EMPRÉ
+                    case 4:  // === ADICIONA UM LIVRO === ARRUMAR A LÓGICA PARA ADICIONAR REVISTAS E TESES TAMBÉM
                     {
                             String titulo, autor, genero, editora, Isbn;
                             Integer quantidadePaginas, quantidadeDisponivel;
@@ -230,11 +265,8 @@ public class Main {
                             System.out.println("- Insira o número do livro que deseja apagar:");
                             Isbn = leitor.nextLine();
 
-                            if (biblioteca.removerLivro(Isbn)) {
-                                System.out.println("Livro removido com sucesso!");
-                                break;
-                            }
-                            System.out.println("Livro não encontrado!");
+                            biblioteca.removerItem(Isbn);
+                            // MOSTRAR MENSAGEM DE SUCESSO OU FALHA NA OPERAÇÃO
                         break;
                     }
                     case 6:  // === LISTA OS USUARIOS CADASTRADOS ===
@@ -247,7 +279,6 @@ public class Main {
                             for (Usuario usuario : biblioteca.getUsuarios()) {
                                 System.out.println("\nNome: " + usuario.getNome());
                                 System.out.println("Registro: " + usuario.getCodigoUsuario());
-                                System.out.println("Data de Nascimento: " + usuario.getDataNascimento());
                                 if (usuario.getCodigoEmprestimos().isEmpty() || usuario.getCodigoEmprestimos() == null)
                                     System.out.println("Livros Emprestados: Nenhum livro emprestado");
                                 else {
@@ -261,7 +292,9 @@ public class Main {
                             }
                         break;
                     }
-                    case 7:  // === ADICIONA UM USUARIO ===
+                    // === LISTA OS PROFESSORES CADASTRADOS ===
+                    // === LISTA OS SERVIDORES CADASTRADOS ===
+                    case 7:  // === ADICIONA UM USUARIO === ARRUMAR A LÓGICA PARA ADICIONAR PROFESSORES E SERVIDORES TAMBÉM
                     {
                             String nome, registro, dataNascimento;
                             LocalDate dataLocal;
@@ -284,7 +317,7 @@ public class Main {
                             System.out.println("Usuário adicionado com sucesso!");
                         break;
                     }
-                    case 8:  // === APAGA O REGISTRO DO USUÁRIO ===
+                    case 8:  // === APAGA O REGISTRO DO USUÁRIO === 
                     {
                             String registro;
 
@@ -474,14 +507,14 @@ public class Main {
                                 }
                                 for (Emprestimo emprestimo : biblioteca.getEmprestimos())
                                     if (emprestimo.getRegistroUsuario().equals(codigoUsuario)
-                                            && emprestimo.getIsbn().equals(codigoLivro))
+                                            && emprestimo.getIdLivro().equals(codigoLivro))
                                         codigoDevolucao = emprestimo.getCodigoEmprestimo();
 
                             } while (livroDevolvido == null || !usuarioDevolucao.getCodigoEmprestimos().contains(codigoLivro));
                             // Realiza a devolução do livro
                             biblioteca.realizarDevolucao(codigoDevolucao);
                             // Atualiza a quantidade de livros disponíveis na biblioteca
-                            livroDevolvido = biblioteca.buscarLivro(codigoLivro);
+                            livroDevolvido = biblioteca.buscarItem(codigoLivro);
                             livroDevolvido.realizarDevolucao();
                             // Remove o código do empréstimo da lista de empréstimos do usuário
                             usuarioDevolucao = biblioteca.buscarUsuario(codigoUsuario);

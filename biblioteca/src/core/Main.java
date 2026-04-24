@@ -19,9 +19,190 @@ public class Main {
         Biblioteca biblioteca = new Biblioteca();
         Integer opcao;
 
+        public void terminal_principal() {
+            do{
+                System.out.println("\n==== BEM VINDO(A) À BIBLIOTECA ====\n");
+
+                System.out.println("1. Usuários");
+                System.out.println("2. Itens biblioca");
+                System.out.println("3. Empréstimos");
+                System.out.println("4. Em breve... (Reserva)");
+                System.out.println(" 0. Sair");
+
+                do {
+                    try {
+                        opcao = Integer.parseInt(leitor.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Opção inválida! Digite um número inteiro.");
+                        opcao = null;
+                    }
+
+                } while (opcao == null);
+
+                switch(opcao) {
+                    case 0: 
+                        System.out.println("Encerrando....");
+                        break;
+                    
+                    case 1:
+                        terminal_usuarios();
+                        break;
+
+                    case 2:
+                        terminal_itens();
+                        break;
+                    
+                    case 3:
+                        terminal_emprestimos();
+                        break;
+
+                    case 4:
+                        System.out.println("Em breve....");
+                        break;
+                }
+            } while (opcao != 0);
+        }
+
+        public void terminal_usuarios() {
+            int opcao;
+
+            System.out.println("==== USUÁRIOS ====");
+            System.out.println(" 1. Listar todos usuários");
+            System.out.println(" 2. Listar alunos");
+            System.out.println(" 3. Listar professores");
+            System.out.println(" 4. Listar servidores");
+            System.out.println(" 3. Voltar");
+        
+            System.out.println("\n- Insira a opção desejada: ");
+            do {
+                try {
+                    opcao = Integer.parseInt(leitor.nextLine());
+                } catch (NumberFormatException e) {
+                    System.out.println("Opção inválida! Digite um número inteiro.");
+                    opcao = null;
+                }
+
+            } while (opcao == null);
+
+            switch(opcao) {
+                case 0:
+                    terminal_principal();
+                    break;
+
+                case 1:
+                    biblioca.getUsuarios().forEach(System.out::println);
+                    break;
+                
+                case 2:
+                    if(biblioca.getUsuarios().isBlank()) {
+                        System.out.println("Nenhum usuário cadastrado!");
+                        break;
+                    }   
+
+                    Boolean semAluno = biblioca.getUsuarios()
+                        .noneMatch(a -> a instanceof Aluno);
+
+                    if(semAluno) { 
+                        System.out.println("Nenhum aluno cadastrado!");
+                        break;
+                    }   
+
+                    biblioca.getUsuarios().stream()
+                        .filter( a -> a instanceof Aluno)
+                        .forEach(a -> {
+                            Aluno aluno = (Aluno) a;
+                            System.out.println("Nome: " + aluno.getNome());
+                            System.out.println("Registro: " + aluno.getCodigoUsuario());
+                            if (aluno.getCodigoEmprestimos().isEmpty() || aluno.getCodigoEmprestimos() == null)
+                                    System.out.println("Livros Emprestados: Nenhum livro emprestado");
+                            else {
+                                System.out.println("Livros Emprestados: ");
+                                for (String codigoEmprestimo : aluno.getCodigoEmprestimos())
+                                    for (Livro livro : biblioteca.getLivros())
+                                        if (livro.getIsbn().equals(codigoEmprestimo))
+                                            System.out.println("  - " + livro.getTitulo());
+                                System.out.println("-------------------------");
+                            }
+                        });
+                    break;
+
+                case 3: 
+                    if(biblioca.getUsuarios().isBlank()) {
+                        System.out.println("Nenhum usuário cadastrado!");
+                        break;
+                    }   
+
+                    Boolean semProfessor = biblioca.getUsuarios()
+                        .noneMatch(p -> p instanceof Professor);
+
+                    if(semProfessor) { 
+                        System.out.println("Nenhum professor cadastrado!");
+                        break;
+                    }   
+
+                    biblioca.getUsuarios().stream()
+                        .filter( p -> p instanceof Professor)
+                        .forEach(p -> {     
+                            Professor professor = (Professor) a;
+                            System.out.println("Nome: " + professor.getNome());
+                            System.out.println("Registro: " + professor.getCodigoUsuario());
+                            if (professor.getCodigoEmprestimos().isEmpty() || professor.getCodigoEmprestimos() == null)
+                                    System.out.println("Livros Emprestados: Nenhum livro emprestado");
+                            else {
+                                System.out.println("Livros Emprestados: ");
+                                for (String codigoEmprestimo : professor.getCodigoEmprestimos())
+                                    for (Livro livro : biblioteca.getLivros())
+                                        if (livro.getIsbn().equals(codigoEmprestimo))
+                                            System.out.println("  - " + livro.getTitulo());
+                                System.out.println("-------------------------");
+                            }
+                        });
+                    break;
+                case 4:
+                    if(biblioca.getUsuarios().isBlank()) {
+                        System.out.println("Nenhum usuário cadastrado!");
+                        break;
+                    }   
+
+                    Boolean semServidor = biblioca.getUsuarios()
+                        .noneMatch(s -> s instanceof servidorAdministrativo);
+
+                    if(semServidor) { 
+                        System.out.println("Nenhum servidor cadastrado!");
+                        break;
+                    }   
+
+                    biblioca.getUsuarios().stream()
+                        .filter( s -> s instanceof ServidorAdministrativo)
+                        .forEach(s -> {
+                            ServidorAdministrativo servidorAdministrativo = (ServidorAdministrativo) s;
+                            System.out.println("Nome: " + servidorAdministrativo.getNome());
+                            System.out.println("Registro: " + servidorAdministrativo.getCodigoUsuario());
+                            if (servidorAdministrativo.getCodigoEmprestimos().isEmpty() || servidorAdministrativo.getCodigoEmprestimos() == null)
+                                    System.out.println("Livros Emprestados: Nenhum livro emprestado");
+                            else {
+                                System.out.println("Livros Emprestados: ");
+                                for (String codigoEmprestimo : servidorAdministrativo.getCodigoEmprestimos())
+                                    for (Livro livro : biblioteca.getLivros())
+                                        if (livro.getIsbn().equals(codigoEmprestimo))
+                                            System.out.println("  - " + livro.getTitulo());
+                                System.out.println("-------------------------");
+                            }
+                        });
+                    break;
+            }
+        }
+
+        public void terminal_itens() {
+
+        }
+
+        public void terminal_emprestimos() {
+
+        }
         do {
 
-            System.out.println("\n==== BEM VINDO(A) À BIBLIOTECA ====\n");
+
             System.out.println(" 1. Listar todos itens de leitura");
             System.out.println(" 2. Listar Livros disponíveis");
             System.out.println(" 3. Listar Teses disponíveis");
@@ -31,7 +212,6 @@ public class Main {
             System.out.println(" 7. Listar Revistas indisponíveis");
             System.out.println(" 8. Adicionar Item");
             System.out.println(" 9. Apagar Item");
-            System.out.println(" 10. Listar Usuários");
             System.out.println(" 11. Adicionar Usuário");
             System.out.println(" 12. Apagar Usuário");
             System.out.println(" 13. Listar Emprestimos ativos");
@@ -39,7 +219,6 @@ public class Main {
             System.out.println(" 15. Listar Emprestimo de um Usuario:");
             System.out.println(" 16. Realizar Empréstimo");
             System.out.println(" 17. Realizar Devolução");
-            System.out.println(" 0. Sair");
 
             System.out.println("\n- Insira a opção desejada: ");
             // Garante que a opção seja um numero inteiro

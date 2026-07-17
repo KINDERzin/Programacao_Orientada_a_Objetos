@@ -8,12 +8,12 @@ public class Ator {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() { return this.nome; }
 	public void setNome(String nome) {
 		if(nome.isBlank())
 			throw new IllegalArgumentException("Nome inválido!");
-		
+
 		this.nome = nome.trim();
 	}
 }

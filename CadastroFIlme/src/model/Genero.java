@@ -2,20 +2,18 @@ package model;
 
 public class Genero {
 	private Integer id;
-	private String nome;
+	private String genero;
 	
 	public Integer getId() { return id; }
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getNome() { return nome; }
-	public void setNome(String nome) { 
-		if(nome.isBlank())
-			throw new IllegalArgumentException("Nome inválido!");
-		
-		this.nome = nome.trim();
+	public String getGenero() { return genero; }
+	public void setGenero(String g) { 
+		if(g.isBlank())
+			throw new IllegalArgumentException("Gênero inválido!");
+
+		this.genero = g.trim();
 	}
-	
-	
 }

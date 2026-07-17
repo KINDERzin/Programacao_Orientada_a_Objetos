@@ -18,128 +18,161 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import model.Ator;
 
 public class FilmeView extends JFrame {
 	
-	private DefaultTableModel tableFilmesModel;
-	private JPanel      contentPane;
 	private JLabel      labelPage;
 	private JLabel      labelId;
 	private JLabel      labelTitulo;
 	private JLabel      labelGenero;
 	private JLabel      labelDuracao;
+	private JTextField  textFieldTitulo;
+	private JTextField  textFieldId;
 	private JComboBox   comboBoxGenero;
 	private JButton     btnExcluir;
 	private JButton     btnLimpar;
 	private JButton     btnNovo;
 	private JButton     btnSalvar;
 	private JSpinner    spinnerDuracao;
-	private JTextField  textFieldTitulo;
-	private JTextField  textFieldId;
-	private JTable      table_1;
+	private JPanel      contentPane;
+	private JMenuItem   filmeMenuItem;
+	private JMenuItem   atorMenuItem;
+	private JMenuItem   generoMenuItem;
 	private JTable      tableFilmes;
+	private DefaultTableModel tableFilmesModel;
 	private JList<Ator> atorList;
 	private DefaultListModel<Ator> atorListaModelo;
 
-	
 	public FilmeView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		filmeMenuItem = new JMenuItem("Filme");
+		menuBar.add(filmeMenuItem);
+		
+		atorMenuItem = new JMenuItem("Ator/Atriz");
+		menuBar.add(atorMenuItem);
+		
+		generoMenuItem = new JMenuItem("Gênero");
+		menuBar.add(generoMenuItem);
+		
 		labelPage = new JLabel("Cadastro de Filme");
 		labelPage.setFont(new Font("Tahoma", Font.BOLD, 15));
 		labelPage.setHorizontalAlignment(SwingConstants.CENTER);
-		labelPage.setBounds(136, 11, 151, 25);
+		labelPage.setBounds(138, 12, 151, 25);
 		contentPane.add(labelPage);
 
 		labelId = new JLabel("ID: ");
 		labelId.setHorizontalAlignment(SwingConstants.LEFT);
 		labelId.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		labelId.setBounds(10, 36, 50, 25);
+		labelId.setBounds(12, 25, 50, 25);
 		contentPane.add(labelId);
 		
 		textFieldId = new JTextField();
 		textFieldId.setEnabled(false);
 		textFieldId.setEditable(false);
 		textFieldId.setColumns(10);
-		textFieldId.setBounds(61, 39, 50, 20);
+		textFieldId.setBounds(63, 28, 50, 20);
 		contentPane.add(textFieldId);
 		
 		labelTitulo = new JLabel("Título: ");
 		labelTitulo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		labelTitulo.setHorizontalAlignment(SwingConstants.LEFT);
-		labelTitulo.setBounds(10, 59, 50, 25);
+		labelTitulo.setBounds(12, 48, 50, 25);
 		contentPane.add(labelTitulo);
 		
 		labelGenero = new JLabel("Gênero: ");
 		labelGenero.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		labelGenero.setHorizontalAlignment(SwingConstants.LEFT);
-		labelGenero.setBounds(10, 82, 50, 25);
+		labelGenero.setBounds(12, 71, 50, 25);
 		contentPane.add(labelGenero);
 		
 		labelDuracao = new JLabel("Duração:");
 		labelDuracao.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		labelDuracao.setHorizontalAlignment(SwingConstants.LEFT);
-		labelDuracao.setBounds(10, 105, 50, 25);
+		labelDuracao.setBounds(12, 94, 50, 25);
 		contentPane.add(labelDuracao);
 		
 		textFieldTitulo = new JTextField();
-		textFieldTitulo.setBounds(61, 62, 86, 20);
+		textFieldTitulo.setBounds(63, 51, 86, 20);
 		contentPane.add(textFieldTitulo);
 		textFieldTitulo.setColumns(10);
 		
 		spinnerDuracao = new JSpinner();
 		spinnerDuracao.setModel(new SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-		spinnerDuracao.setBounds(61, 108, 85, 20);
+		spinnerDuracao.setBounds(63, 97, 85, 20);
 		contentPane.add(spinnerDuracao);
 		
 		tableFilmesModel = new DefaultTableModel(new Object[] {"ID", "Título", "Gênero", "Duração", "Atores"}, 0);
 		
 		comboBoxGenero = new JComboBox();
-		comboBoxGenero.setBounds(61, 84, 86, 22);
+		comboBoxGenero.setBounds(63, 73, 86, 22);
 		contentPane.add(comboBoxGenero);
 		
 		JLabel labelAtor = new JLabel("Ator: ");
 		labelAtor.setHorizontalAlignment(SwingConstants.LEFT);
 		labelAtor.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		labelAtor.setBounds(154, 56, 50, 25);
+		labelAtor.setBounds(156, 45, 50, 25);
 		contentPane.add(labelAtor);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 159, 414, 91);
+		scrollPane.setBounds(12, 132, 414, 91);
 		contentPane.add(scrollPane);
 		
 		tableFilmes = new JTable();
 		scrollPane.setViewportView(tableFilmes);
 		
 		btnExcluir= new JButton("Excluir");
-		btnExcluir.setBounds(335, 122, 89, 23);
+		btnExcluir.setBounds(337, 100, 89, 23);
 		contentPane.add(btnExcluir);
 		
 		btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(335, 97, 89, 23);
+		btnLimpar.setBounds(337, 75, 89, 23);
 		contentPane.add(btnLimpar);
 		
 		btnNovo = new JButton("Novo");
-		btnNovo.setBounds(335, 72, 89, 23);
+		btnNovo.setBounds(337, 50, 89, 23);
 		contentPane.add(btnNovo);
 		
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(335, 47, 89, 23);
+		btnSalvar.setBounds(337, 25, 89, 23);
 		contentPane.add(btnSalvar);
 		
 		atorListaModelo = new DefaultListModel<Ator>();
 		atorList = new JList<>(atorListaModelo);
-		atorList.setBounds(202, 59, 120, 72);
+		atorList.setBounds(204, 48, 120, 72);
 		contentPane.add(atorList);
 	}
 	
+	// MENUS
+	public JMenuItem getFilmeMenuItem() { return this.filmeMenuItem; }
+	public void setFilmeMenuItem(JMenuItem menu) {
+		this.filmeMenuItem = menu;
+	}
+	
+	public JMenuItem getAtorMenuItem() { return this.atorMenuItem; }
+	public void setAtorMenuItem(JMenuItem menu ) {
+		this.atorMenuItem = menu;
+	}
+	
+	public JMenuItem getGeneroMenuItem() { return this.generoMenuItem; }
+	public void setGeneroMenuItem(JMenuItem menu) {
+		this.generoMenuItem = menu;
+	}
+	
+	// TABELA
 	public DefaultTableModel getTabelaFilmesModel() { return this.tableFilmesModel; }
 	public void setTabelaFilmesModel(DefaultTableModel filmesTableModel) {
 		this.tableFilmesModel = filmesTableModel;
@@ -150,6 +183,7 @@ public class FilmeView extends JFrame {
 		this.tableFilmes = table;
 	}
 	
+	// BOTÕES
 	public JButton getSalvarButton() { return this.btnSalvar; }
 	public void setSalvarButton(JButton button) {
 		this.btnSalvar = button;
@@ -170,28 +204,30 @@ public class FilmeView extends JFrame {
 		this.btnExcluir = button;
 	}
 	
+	// CAMPOS DE TEXTO
 	public JTextField getTextFieldTitulo() { return textFieldTitulo; }
 	public void setTextFieldTitulo(JTextField textFieldTitulo) {
 		this.textFieldTitulo = textFieldTitulo;
 	}
-
-	public JComboBox getComboBoxGenero() { return this.comboBoxGenero; }
-	public void setTextFieldGenero(JComboBox comboBoxGenero) {
-		this.comboBoxGenero= comboBoxGenero;
-	}
 	
-	
-
 	public JTextField getTextFieldId() { return textFieldId; }
 	public void setTextFieldId(JTextField textFieldId) {
 		this.textFieldId = textFieldId;
 	}
 
+	// SPINNER 
 	public JSpinner getSpinnerDuracao() { return this.spinnerDuracao; }
 	public void setSpinnerDuracao(JSpinner spinnerDuracao) {
 		this.spinnerDuracao = spinnerDuracao;
 	}
 	
+	// CAIXA DE SELEÇÃO
+	public JComboBox getComboBoxGenero() { return this.comboBoxGenero; }
+	public void setTextFieldGenero(JComboBox comboBoxGenero) {
+		this.comboBoxGenero= comboBoxGenero;
+	}
+	
+	// LISTA DE SELEÇÃO
 	public JList<Ator> getAtorList() { return atorList; }
 	public void setAtorList(DefaultListModel<Ator> atorListaModelo) {
 		this.atorList = new JList<>(atorListaModelo);

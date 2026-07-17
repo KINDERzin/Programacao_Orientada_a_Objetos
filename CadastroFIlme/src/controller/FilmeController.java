@@ -10,7 +10,9 @@ import javax.swing.event.ListSelectionListener;
 import model.Ator;
 import model.Filme;
 import model.Genero;
+import view.AtorView;
 import view.FilmeView;
+import view.GeneroView;
 import repository.AtorRepository;
 import repository.FilmeRepository;
 import repository.GeneroRepository;
@@ -32,6 +34,25 @@ public class FilmeController {
 	public List<Filme> listarFilmes() { return this.filmes; }
 	
 	public void Configurar_Eventos() {
+		
+		view.getAtorMenuItem().addActionListener(e -> {
+			try {
+				abrirTelaAtor();
+			}
+			catch(Exception ex) {
+				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		
+		view.getGeneroMenuItem().addActionListener(e -> {
+			try {
+				abrirTelaGenero();
+			}
+			catch(Exception ex) {
+				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		
 		// Eventos do botão LIMPAR
 		view.getLimparButton().addActionListener(e ->  {
 			try { LimparCampos(); }
@@ -50,7 +71,6 @@ public class FilmeController {
 		view.getSalvarButton().addActionListener(e ->  {
 			try { SalvarFilme(); }
 			catch (Exception ex) {
-				System.out.println("Opa");
 				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -76,6 +96,23 @@ public class FilmeController {
 		view.setAtorList(view.getAtorListaModelo());
 	}
 	
+	// NAVEGAÇÃO ENTRE TELAS
+	public void abrirTelaAtor() {
+		AtorView atorView = new AtorView();
+		AtorRepository atorReposiroty = new AtorRepository();
+		new AtorController(atorView, atorReposiroty);
+		atorView.setVisible(true);
+		view.dispose();
+	}
+	
+	public void abrirTelaGenero() {
+		GeneroView generoView = new GeneroView();
+		GeneroRepository generorepository = new GeneroRepository();
+		new GeneroController(generoView, generorepository);
+		generoView.setVisible(true);
+		view.dispose();
+	}
+	
 	public void CarregarFilmeSelecionado() {
 		int linhaSelecionada = view.getTableFilmes().getSelectedRow();	
 		
@@ -98,6 +135,7 @@ public class FilmeController {
 		
 	}
 	
+	// FUNÇÕES DOS BOTÕES
 	public void LimparCampos() {
 		view.getTextFieldTitulo().setText("");
 		view.getComboBoxGenero().setSelectedItem(null);
@@ -115,7 +153,7 @@ public class FilmeController {
 		MontarTabela();
 	}
 	
-	public void SalvarFilme() {		
+	public void SalvarFilme() {
 		String id = view.getTextFieldId().getText();		
 		String titulo = view.getTextFieldTitulo().getText();
 		Genero genero = (Genero) view.getComboBoxGenero().getSelectedItem();
@@ -153,6 +191,11 @@ public class FilmeController {
 		MontarTabela();
 	}
 	
+	public void NovoFilme() {
+		LimparCampos();		
+	}
+	
+	// CONFIGURAÇÃO DA TABELA
 	public void MontarTabela() {
 		view.getTabelaFilmesModel().setRowCount(0);
 		
@@ -165,9 +208,5 @@ public class FilmeController {
 					f.getDuracao()
 			});
 		}
-	}
-	
-	public void NovoFilme() {
-		LimparCampos();		
 	}
 }

@@ -8,12 +8,15 @@ import model.Genero;
 
 public class GeneroRepository {
 	private final List<Genero> generos = new ArrayList<>();
-	private Integer proximoId;
+	private Integer proximoId = 1;
 	
 	public void adicionarGenero(Genero genero) {
+		System.out.println("adicionarGenero");
 		genero.setId(proximoId);
 		proximoId++;
 		
+		System.out.println(genero.getGenero());
+		System.out.println(genero.getId());
 		generos.add(genero);
 	}
 	

@@ -3,15 +3,18 @@ package view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JTable;
 
 public class AtorView extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField  idTextField;
@@ -21,6 +24,11 @@ public class AtorView extends JFrame {
 	private JButton     btnLimpar;  
 	private JButton     btnExcluir;
 	private JScrollPane scrollPane;
+	private JMenuItem   filmeMenuItem;
+	private JMenuItem   atorMenuItem;
+	private JMenuItem   generoMenuItem;
+	private JTable atorTable;
+	private DefaultTableModel atorTableModel;
 
 	public AtorView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,7 +38,19 @@ public class AtorView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel labelPage = new JLabel("Cadastro de Filme");
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		filmeMenuItem = new JMenuItem("Filme");
+		menuBar.add(filmeMenuItem);
+		
+		atorMenuItem = new JMenuItem("Ator/Atriz");
+		menuBar.add(atorMenuItem);
+		
+		generoMenuItem = new JMenuItem("Gênero");
+		menuBar.add(generoMenuItem);
+		
+		JLabel labelPage = new JLabel("Cadastro de Atores");
 		labelPage.setHorizontalAlignment(SwingConstants.CENTER);
 		labelPage.setFont(new Font("Tahoma", Font.BOLD, 15));
 		labelPage.setBounds(136, 11, 151, 25);
@@ -61,54 +81,85 @@ public class AtorView extends JFrame {
 		contentPane.add(nomeTextField);
 		
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(191, 47, 89, 23);
+		btnSalvar.setBounds(319, 25, 89, 23);
 		contentPane.add(btnSalvar);
 		
 		btnNovo = new JButton("Novo");
-		btnNovo.setBounds(191, 72, 89, 23);
+		btnNovo.setBounds(319, 50, 89, 23);
 		contentPane.add(btnNovo);
 		
 		btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(191, 97, 89, 23);
+		btnLimpar.setBounds(319, 75, 89, 23);
 		contentPane.add(btnLimpar);
 		
 		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(191, 122, 89, 23);
+		btnExcluir.setBounds(319, 100, 89, 23);
 		contentPane.add(btnExcluir);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 159, 414, 91);
+		scrollPane.setBounds(10, 133, 414, 91);
 		contentPane.add(scrollPane);
-
+		
+		atorTable = new JTable();
+		scrollPane.setViewportView(atorTable);
+		
+		atorTableModel = new DefaultTableModel(new Object[] {"ID", "Ator"}, 0);
 	}
-
+	
+	// MENUS
+	public JMenuItem getFilmeMenuItem() { return filmeMenuItem; }
+	public void setFilmeMenuItem(JMenuItem menu) {
+		this.filmeMenuItem = menu;
+	}
+	
+	public JMenuItem getAtorMenuItem() { return atorMenuItem; }
+	public void setAtorMenuItem(JMenuItem menu) {
+		this.atorMenuItem = menu;
+	}
+	
+	public JMenuItem getGeneroMenuItem() { return generoMenuItem; }
+	public void setGeneroMenuItem(JMenuItem menu) {
+		this.generoMenuItem = menu;
+	}
+	
+	// CAMPOS DE TEXTO
 	public JTextField getIdTextField() { return idTextField; }
 	public void setIdTextField(JTextField idTextField) {
 		this.idTextField = idTextField;
 	}
-
+	
 	public JTextField getNomeTextField() { return nomeTextField; }
 	public void setNomeTextField(JTextField nomeTextField) {
 		this.nomeTextField = nomeTextField;
 	}
-
+	
+	// BOTÕES
 	public JButton getBtnSalvar() { return btnSalvar; }
 	public void setBtnSalvar(JButton btnSalvar) {
 		this.btnSalvar = btnSalvar;
 	}
-
+	
 	public JButton getBtnNovo() { return btnNovo; }
 	public void setBtnNovo(JButton btnNovo) {
 		this.btnNovo = btnNovo;
 	}
-
 	public JButton getBtnLimpar() { return btnLimpar; }
 	public void setBtnLimpar(JButton btnLimpar) {
 		this.btnLimpar = btnLimpar;
 	}
-
 	public JButton getBtnExcluir() { return btnExcluir; }
 	public void setBtnExcluir(JButton btnExcluir) {
 		this.btnExcluir = btnExcluir;
+	}
+	
+	// TABELA
+	public DefaultTableModel getAtorTabelaModel() { return this.atorTableModel; }
+	public void setAtorTabelaModel(DefaultTableModel modelo) {
+		this.atorTableModel = modelo;
+	}
+	
+	public JTable getAtorTable() { return this.atorTable; }
+	public void setAtorTable(JTable table) {
+		this.atorTable = table;
 	}
 }

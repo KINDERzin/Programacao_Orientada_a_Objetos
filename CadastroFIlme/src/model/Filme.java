@@ -24,7 +24,7 @@ public class Filme {
 
     public Integer getDuracao() { return this.duracao; }
     public void setDuracao(Integer tempo) {
-    	if(duracao < 1)
+    	if(tempo < 1)
     		throw new IllegalArgumentException("A duração deve ser maior que 0");
 
     	this.duracao = tempo;

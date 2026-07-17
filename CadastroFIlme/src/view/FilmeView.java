@@ -1,8 +1,10 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.Component;
 
 import java.awt.Font;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -22,29 +24,30 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import model.Ator;
+import model.Genero;
 
 public class FilmeView extends JFrame {
 	
+	private DefaultTableModel tableFilmesModel;
+	private JPanel      contentPane;
 	private JLabel      labelPage;
 	private JLabel      labelId;
 	private JLabel      labelTitulo;
 	private JLabel      labelGenero;
 	private JLabel      labelDuracao;
-	private JTextField  textFieldTitulo;
-	private JTextField  textFieldId;
 	private JComboBox   comboBoxGenero;
 	private JButton     btnExcluir;
 	private JButton     btnLimpar;
 	private JButton     btnNovo;
 	private JButton     btnSalvar;
 	private JSpinner    spinnerDuracao;
-	private JPanel      contentPane;
+	private JTextField  textFieldTitulo;
+	private JTextField  textFieldId;
+	private JTable      tableFilmes;
+	private JList<Ator> atorList;
 	private JMenuItem   filmeMenuItem;
 	private JMenuItem   atorMenuItem;
 	private JMenuItem   generoMenuItem;
-	private JTable      tableFilmes;
-	private DefaultTableModel tableFilmesModel;
-	private JList<Ator> atorList;
 	private DefaultListModel<Ator> atorListaModelo;
 
 	public FilmeView() {
@@ -119,6 +122,16 @@ public class FilmeView extends JFrame {
 		
 		comboBoxGenero = new JComboBox();
 		comboBoxGenero.setBounds(63, 73, 86, 22);
+		comboBoxGenero.setRenderer(new DefaultListCellRenderer() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if(value instanceof Genero)
+					setText(((Genero) value).getGenero());
+				return this;
+			}
+		});
 		contentPane.add(comboBoxGenero);
 		
 		JLabel labelAtor = new JLabel("Ator: ");
@@ -131,7 +144,9 @@ public class FilmeView extends JFrame {
 		scrollPane.setBounds(12, 132, 414, 91);
 		contentPane.add(scrollPane);
 		
-		tableFilmes = new JTable();
+		// A JTable precisa nascer com o model já associado, senão ela
+		// exibe uma tabela vazia própria e nunca reflete o tableFilmesModel.
+		tableFilmes = new JTable(tableFilmesModel);
 		scrollPane.setViewportView(tableFilmes);
 		
 		btnExcluir= new JButton("Excluir");
@@ -153,10 +168,19 @@ public class FilmeView extends JFrame {
 		atorListaModelo = new DefaultListModel<Ator>();
 		atorList = new JList<>(atorListaModelo);
 		atorList.setBounds(204, 48, 120, 72);
+		atorList.setCellRenderer(new DefaultListCellRenderer() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				if(value instanceof Ator)
+					setText(((Ator) value).getNome());
+				return this;
+			}
+		});
 		contentPane.add(atorList);
 	}
 	
-	// MENUS
 	public JMenuItem getFilmeMenuItem() { return this.filmeMenuItem; }
 	public void setFilmeMenuItem(JMenuItem menu) {
 		this.filmeMenuItem = menu;
@@ -172,7 +196,6 @@ public class FilmeView extends JFrame {
 		this.generoMenuItem = menu;
 	}
 	
-	// TABELA
 	public DefaultTableModel getTabelaFilmesModel() { return this.tableFilmesModel; }
 	public void setTabelaFilmesModel(DefaultTableModel filmesTableModel) {
 		this.tableFilmesModel = filmesTableModel;
@@ -183,7 +206,6 @@ public class FilmeView extends JFrame {
 		this.tableFilmes = table;
 	}
 	
-	// BOTÕES
 	public JButton getSalvarButton() { return this.btnSalvar; }
 	public void setSalvarButton(JButton button) {
 		this.btnSalvar = button;
@@ -204,10 +226,14 @@ public class FilmeView extends JFrame {
 		this.btnExcluir = button;
 	}
 	
-	// CAMPOS DE TEXTO
 	public JTextField getTextFieldTitulo() { return textFieldTitulo; }
 	public void setTextFieldTitulo(JTextField textFieldTitulo) {
 		this.textFieldTitulo = textFieldTitulo;
+	}
+
+	public JComboBox getComboBoxGenero() { return this.comboBoxGenero; }
+	public void setTextFieldGenero(JComboBox comboBoxGenero) {
+		this.comboBoxGenero= comboBoxGenero;
 	}
 	
 	public JTextField getTextFieldId() { return textFieldId; }
@@ -215,19 +241,11 @@ public class FilmeView extends JFrame {
 		this.textFieldId = textFieldId;
 	}
 
-	// SPINNER 
 	public JSpinner getSpinnerDuracao() { return this.spinnerDuracao; }
 	public void setSpinnerDuracao(JSpinner spinnerDuracao) {
 		this.spinnerDuracao = spinnerDuracao;
 	}
 	
-	// CAIXA DE SELEÇÃO
-	public JComboBox getComboBoxGenero() { return this.comboBoxGenero; }
-	public void setTextFieldGenero(JComboBox comboBoxGenero) {
-		this.comboBoxGenero= comboBoxGenero;
-	}
-	
-	// LISTA DE SELEÇÃO
 	public JList<Ator> getAtorList() { return atorList; }
 	public void setAtorList(DefaultListModel<Ator> atorListaModelo) {
 		this.atorList = new JList<>(atorListaModelo);

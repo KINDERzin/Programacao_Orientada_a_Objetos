@@ -18,23 +18,31 @@ import repository.FilmeRepository;
 import repository.GeneroRepository;
 
 public class FilmeController {
-	private List<Filme> filmes = new ArrayList<>();
-	private List<Ator> atores = new ArrayList<>();
-	private List<Genero> generos = new ArrayList<>();
 	private FilmeRepository repository;
+	private AtorRepository atorRepository;
+	private GeneroRepository generoRepository;
 	private FilmeView view;
-	
+
 	public FilmeController(FilmeView view, FilmeRepository repository) {
+		this(view, repository, new AtorRepository(), new GeneroRepository());
+	}
+
+	public FilmeController(FilmeView view, FilmeRepository repository, AtorRepository atorRepository, GeneroRepository generoRepository) {
 		this.view = view;
 		this.repository = repository;
-		
+		this.atorRepository = atorRepository;
+		this.generoRepository = generoRepository;
+
 		Configurar_Eventos();
+		CarregarGenerosEAtores();
+		MontarTabela();
+		LimparCampos();
 	}
-	
-	public List<Filme> listarFilmes() { return this.filmes; }
-	
+
+	public List<Filme> listarFilmes() { return this.repository.listarFilmes(); }
+
 	public void Configurar_Eventos() {
-		
+
 		view.getAtorMenuItem().addActionListener(e -> {
 			try {
 				abrirTelaAtor();
@@ -43,7 +51,7 @@ public class FilmeController {
 				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		
+
 		view.getGeneroMenuItem().addActionListener(e -> {
 			try {
 				abrirTelaGenero();
@@ -52,7 +60,7 @@ public class FilmeController {
 				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		
+
 		// Eventos do botão LIMPAR
 		view.getLimparButton().addActionListener(e ->  {
 			try { LimparCampos(); }
@@ -85,75 +93,93 @@ public class FilmeController {
 		view.getTableFilmes().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				CarregarFilmeSelecionado();
+				if(!e.getValueIsAdjusting()) {
+					try { CarregarFilmeSelecionado(); }
+					catch(Exception ex) {
+						JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 		});
-		// Popula o modelo que será passado para a lista
-		for(int i = 0; i < atores.size(); i++) {
-			view.getAtorListaModelo().add(i, atores.get(i));			
-		}
-		// Seta os valores da lista
-		view.setAtorList(view.getAtorListaModelo());
 	}
-	
-	// NAVEGAÇÃO ENTRE TELAS
+
+	public void CarregarGenerosEAtores() {
+		view.getComboBoxGenero().removeAllItems();
+		for(Genero g : generoRepository.listarGeneros())
+			view.getComboBoxGenero().addItem(g);
+
+		view.getAtorListaModelo().clear();
+		for(Ator a : atorRepository.listarAtores())
+			view.getAtorListaModelo().addElement(a);
+	}
+
 	public void abrirTelaAtor() {
 		AtorView atorView = new AtorView();
-		AtorRepository atorReposiroty = new AtorRepository();
-		new AtorController(atorView, atorReposiroty);
+		new AtorController(atorView, atorRepository, repository, generoRepository);
 		atorView.setVisible(true);
 		view.dispose();
 	}
-	
+
 	public void abrirTelaGenero() {
 		GeneroView generoView = new GeneroView();
-		GeneroRepository generorepository = new GeneroRepository();
-		new GeneroController(generoView, generorepository);
+		new GeneroController(generoView, generoRepository, atorRepository, repository);
 		generoView.setVisible(true);
 		view.dispose();
 	}
-	
+
 	public void CarregarFilmeSelecionado() {
-		int linhaSelecionada = view.getTableFilmes().getSelectedRow();	
-		
-		if(linhaSelecionada == -1) 
-			throw new IllegalAccessError("Linha selecionada inválida!");
-		
-		view.getExcluirButton().setEnabled(true);
-		
-		int linhaModelo = view.getTableFilmes().convertColumnIndexToModel(linhaSelecionada);
+		int linhaSelecionada = view.getTableFilmes().getSelectedRow();
+
+		if(linhaSelecionada == -1)
+			return;
+
+		int linhaModelo = view.getTableFilmes().convertRowIndexToModel(linhaSelecionada);
 		Integer id = (Integer) view.getTabelaFilmesModel().getValueAt(linhaModelo, 0);
 
 		this.repository.buscarPorId(id).ifPresent(this::PreencherCampos);
+		view.getExcluirButton().setEnabled(true);
 	}
-	
+
 	public void PreencherCampos(Filme filme) {
 		view.getTextFieldTitulo().setText(filme.getTitulo());
 		view.getComboBoxGenero().setSelectedItem(filme.getGenero());
 		view.getSpinnerDuracao().setValue(filme.getDuracao());
-		view.getTextFieldId().setText(filme.getId().toString());
-		
+		view.getTextFieldId().setText(String.valueOf(filme.getId()));
+
+		List<Integer> indices = new ArrayList<>();
+		for(int i = 0; i < view.getAtorListaModelo().size(); i++) {
+			Ator atorLista = view.getAtorListaModelo().get(i);
+			boolean selecionado = filme.getAtores().stream()
+					.anyMatch(a -> a.getId() == atorLista.getId());
+			if(selecionado)
+				indices.add(i);
+		}
+		int[] indicesArray = indices.stream().mapToInt(Integer::intValue).toArray();
+		view.getAtorList().setSelectedIndices(indicesArray);
 	}
-	
-	// FUNÇÕES DOS BOTÕES
+
 	public void LimparCampos() {
 		view.getTextFieldTitulo().setText("");
 		view.getComboBoxGenero().setSelectedItem(null);
 		view.getSpinnerDuracao().setValue(1);
 		view.getTextFieldId().setText("");
+		view.getAtorList().clearSelection();
 		view.getExcluirButton().setEnabled(false);
 	}
-	
+
 	public void ExcluirFilme() {
 		String id = view.getTextFieldId().getText();
-		
+
+		if(id.isBlank())
+			throw new IllegalArgumentException("Selecione um filme para excluir!");
+
 		repository.excluir(Integer.parseInt(id));
-		
+
 		LimparCampos();
 		MontarTabela();
 	}
-	
-	public void SalvarFilme() {
+
+	public void SalvarFilme() {		
 		String id = view.getTextFieldId().getText();		
 		String titulo = view.getTextFieldTitulo().getText();
 		Genero genero = (Genero) view.getComboBoxGenero().getSelectedItem();
@@ -163,7 +189,7 @@ public class FilmeController {
 		if(titulo.isBlank())
 			throw new IllegalArgumentException("Insira um título válido!");
 		
-		if(genero.equals(null))
+		if(genero == null)
 			throw new IllegalArgumentException("Insira um gênero válido!");
 		
 		if(duracao < 1)
@@ -191,11 +217,6 @@ public class FilmeController {
 		MontarTabela();
 	}
 	
-	public void NovoFilme() {
-		LimparCampos();		
-	}
-	
-	// CONFIGURAÇÃO DA TABELA
 	public void MontarTabela() {
 		view.getTabelaFilmesModel().setRowCount(0);
 		
@@ -204,9 +225,14 @@ public class FilmeController {
 				new Object[] {
 					f.getId(),
 					f.getTitulo(),
-					f.getGenero(),
-					f.getDuracao()
+					f.getGenero().getGenero(),
+					f.getDuracao(),
+					f.getAtores().size()
 			});
 		}
+	}
+	
+	public void NovoFilme() {
+		LimparCampos();		
 	}
 }

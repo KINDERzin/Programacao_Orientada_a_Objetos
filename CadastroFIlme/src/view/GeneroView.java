@@ -4,15 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-import model.Genero;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import javax.swing.JList;
-
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -30,12 +24,11 @@ public class GeneroView extends JFrame {
 	private JButton btnLimpar;
 	private JButton btnNovo;
 	private JButton btnSalvar;
+	private JTable table;
 	private DefaultTableModel generoTableModel;
 	private JMenuItem filmeMenuItem;
 	private JMenuItem atorMenuItem;
 	private JMenuItem generoMenuItem;
-	private JTable table_1;
-	private JTable generoTable;
 
 	public GeneroView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,29 +81,29 @@ public class GeneroView extends JFrame {
 		contentPane.add(generoTextField);
 		
 		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(335, 87, 89, 23);
+		btnExcluir.setBounds(336, 116, 89, 23);
 		contentPane.add(btnExcluir);
 		
 		btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(335, 62, 89, 23);
+		btnLimpar.setBounds(336, 91, 89, 23);
 		contentPane.add(btnLimpar);
 		
 		btnNovo = new JButton("Novo");
-		btnNovo.setBounds(335, 37, 89, 23);
+		btnNovo.setBounds(336, 66, 89, 23);
 		contentPane.add(btnNovo);
 		
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(335, 14, 89, 23);
+		btnSalvar.setBounds(336, 43, 89, 23);
 		contentPane.add(btnSalvar);
 
+		generoTableModel = new DefaultTableModel(new Object[] {"ID", "Gênero"}, 0);
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 127, 414, 91);
+		scrollPane.setBounds(10, 159, 414, 91);
 		contentPane.add(scrollPane);
 		
-		generoTable = new JTable();
-		scrollPane.setViewportView(generoTable);
-		
-		generoTableModel = new DefaultTableModel(new Object[] {"ID", "Gênero"}, 0);
+		table = new JTable(generoTableModel);
+		scrollPane.setViewportView(table);
 	}
 	
 	public JMenuItem getFilmeMenuItem() { return filmeMenuItem; }
@@ -131,11 +124,6 @@ public class GeneroView extends JFrame {
 	public DefaultTableModel getGeneroTableModel() { return this.generoTableModel; }
 	public void setGeneroTableModel(DefaultTableModel model) {
 		this.generoTableModel = model;
-	}
-	
-	public JTable getGeneroTable() { return this.generoTable; }
-	public void setGeneroTable(JTable t) {
-		this.generoTable = t;
 	}
 
 	public JTextField getIdTextField() { return idTextField; }
@@ -166,5 +154,10 @@ public class GeneroView extends JFrame {
 	public JButton getBtnSalvar() { return btnSalvar; }
 	public void setBtnSalvar(JButton btnSalvar) {
 		this.btnSalvar = btnSalvar;
+	}
+
+	public JTable getTable() { return table; }
+	public void setTable(JTable table) {
+		this.table = table;
 	}
 }

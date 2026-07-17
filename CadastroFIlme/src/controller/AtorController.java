@@ -1,12 +1,8 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
 import model.Ator;
-import model.Filme;
 import repository.AtorRepository;
 import repository.FilmeRepository;
 import repository.GeneroRepository;
@@ -15,72 +11,128 @@ import view.FilmeView;
 import view.GeneroView;
 
 public class AtorController {
-	private List<Ator> atores = new ArrayList<>();
 	private AtorRepository repository;
 	private AtorView view;
-	private FilmeController filmeController;
+	private FilmeRepository filmeRepository;
+	private GeneroRepository generoRepository;
 
 	public AtorController(AtorView view, AtorRepository repository) {
+		this(view, repository, new FilmeRepository(), new GeneroRepository());
+	}
+
+	public AtorController(AtorView view, AtorRepository repository, FilmeRepository filmeRepository, GeneroRepository generoRepository) {
 		this.view = view;
 		this.repository = repository;
+		this.filmeRepository = filmeRepository;
+		this.generoRepository = generoRepository;
 
 		configurarEventos();
+		montarTabela();
+		limparCampos();
 	}
 
 	public void configurarEventos() {
-		
+
 		view.getFilmeMenuItem().addActionListener(e -> {
 			try { abrirTelaFilme(); }
 			catch(Exception ex) {
 				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		
+
 		view.getGeneroMenuItem().addActionListener(e -> {
 			try { abrirTelaGenero(); }
 			catch(Exception ex) {
 				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		
-		view.getBtnExcluir().addActionListener(e -> {
-			try {
-				excluirAtor();
-			}
+
+		view.getBtnSalvar().addActionListener(e -> {
+			try { salvarAtor(); }
 			catch(Exception ex) {
 				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		});
+
+		view.getBtnNovo().addActionListener(e -> {
+			try { novoAtor(); }
+			catch(Exception ex) {
+				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+
+		view.getBtnLimpar().addActionListener(e -> {
+			try { limparCampos(); }
+			catch(Exception ex) {
+				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+
+		view.getBtnExcluir().addActionListener(e -> {
+			try { excluirAtor(); }
+			catch(Exception ex) {
+				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+
+		view.getTable().getSelectionModel().addListSelectionListener(e -> {
+			if(!e.getValueIsAdjusting()) {
+				try { carregarAtorSelecionado(); }
+				catch(Exception ex) {
+					JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 	}
-	
-	// NAVEGAÇÃO ENTRE TELAS
+
 	public void abrirTelaFilme() {
 		FilmeView filmeView = new FilmeView();
-		FilmeRepository filmeRepository = new FilmeRepository();
-		new FilmeController(filmeView, filmeRepository);
+		new FilmeController(filmeView, filmeRepository, repository, generoRepository);
 		filmeView.setVisible(true);
 		view.dispose();
 	}
-	
+
 	public void abrirTelaGenero() {
 		GeneroView generoView = new GeneroView();
-		GeneroRepository generoRepository = new GeneroRepository();
-		new GeneroController(generoView, generoRepository);
+		new GeneroController(generoView, generoRepository, repository, filmeRepository);
 		generoView.setVisible(true);
 		view.dispose();
 	}
 
-	// FUNÇÕES DOS BOTÕES
+	public void carregarAtorSelecionado() {
+		int linhaSelecionada = view.getTable().getSelectedRow();
+
+		if(linhaSelecionada == -1)
+			return;
+
+		int linhaModelo = view.getTable().convertRowIndexToModel(linhaSelecionada);
+		Integer id = (Integer) view.getAtorTableModel().getValueAt(linhaModelo, 0);
+
+		repository.buscarPorId(id).ifPresent(this::preencherCampos);
+		view.getBtnExcluir().setEnabled(true);
+	}
+
+	public void preencherCampos(Ator ator) {
+		view.getIdTextField().setText(String.valueOf(ator.getId()));
+		view.getNomeTextField().setText(ator.getNome());
+	}
+
 	public void excluirAtor() {
 		String id = view.getIdTextField().getText();
-		Boolean vinculado = false;
 
-		for(Filme filme : filmeController.listarFilmes())
-			vinculado = filme.getAtores().stream()
-				.anyMatch(ator -> (ator.getId() == Integer.parseInt(id)));
+		if(id.isBlank())
+			throw new IllegalArgumentException("Selecione um ator para excluir!");
 
-		if(!vinculado)
-			repository.excluir(Integer.parseInt(id));
+		int idInt = Integer.parseInt(id);
+
+		boolean vinculado = filmeRepository.listarFilmes().stream()
+				.anyMatch(filme -> filme.getAtores().stream()
+						.anyMatch(ator -> ator.getId() == idInt));
+
+		if(vinculado)
+			throw new IllegalArgumentException("Esse ator está vinculado a um filme e não pode ser excluído!");
+
+		repository.excluir(idInt);
 
 		limparCampos();
 		montarTabela();
@@ -89,9 +141,11 @@ public class AtorController {
 	public void limparCampos() {
 		view.getIdTextField().setText("");
 		view.getNomeTextField().setText("");
+		view.getBtnExcluir().setEnabled(false);
+		view.getTable().clearSelection();
 	}
 
-	public void SalvarAtor() {
+	public void salvarAtor() {
 		String id = view.getIdTextField().getText();
 		String nome = view.getNomeTextField().getText();
 
@@ -101,9 +155,9 @@ public class AtorController {
 		Ator ator = new Ator();
 		ator.setNome(nome);
 
-		if(id.equals(""))
-			atores.stream()
-				.noneMatch(a -> a.getNome() == nome);
+		if(id.equals("")) {
+			repository.adicionarAtor(ator);
+		}
 		else {
 			ator.setId(Integer.parseInt(id));
 			repository.atualizar(ator);
@@ -118,33 +172,9 @@ public class AtorController {
 	}
 
 	public void montarTabela() {
-		view.getAtorTabelaModel().setRowCount(0);
-		
-		for(Ator a : repository.listarAtores()) {
-			view.getAtorTabelaModel().addRow(
-				new Object[] {
-					a.getId(),
-					a.getNome()
-			});
-		}
-	}
-	
-	public void carregarLinhaSelecionada() {
-		int linhaSelecionada = view.getAtorTable().getSelectedRow();
-		
-		if(linhaSelecionada == -1)
-			throw new IllegalArgumentException("A linha selecionada inválida!");
-		
-		view.getBtnExcluir().setEnabled(true);
-		
-		int linhaModel = view.getAtorTable().convertColumnIndexToModel(linhaSelecionada);
-		Integer id = (Integer) view.getAtorTabelaModel().getValueAt(linhaModel, 0);
-		
-		this.repository.buscarPorId(id).ifPresent(this::preencherCampos);
-	}
-	
-	public void preencherCampos(Ator a) {
-		view.getIdTextField().setText(a.getId().toString());
-		view.getNomeTextField().setText(a.getNome());
+		view.getAtorTableModel().setRowCount(0);
+
+		for(Ator a : repository.listarAtores())
+			view.getAtorTableModel().addRow(new Object[] { a.getId(), a.getNome() });
 	}
 }

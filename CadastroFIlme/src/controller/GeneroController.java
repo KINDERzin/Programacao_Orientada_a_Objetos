@@ -1,11 +1,6 @@
 package controller;
 
-import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import java.util.ArrayList;
 
 import repository.GeneroRepository;
 import repository.FilmeRepository;
@@ -16,17 +11,25 @@ import view.AtorView;
 import model.Genero;
 
 public class GeneroController {
-	private List<Genero> generos = new ArrayList<>();
 	private GeneroRepository repository;
+	private AtorRepository atorRepository;
+	private FilmeRepository filmeRepository;
 	private GeneroView view;
-	
+
 	public GeneroController(GeneroView view, GeneroRepository repository) {
+		this(view, repository, new AtorRepository(), new FilmeRepository());
+	}
+
+	public GeneroController(GeneroView view, GeneroRepository repository, AtorRepository atorRepository, FilmeRepository filmeRepository) {
 		this.view = view;
 		this.repository = repository;
+		this.atorRepository = atorRepository;
+		this.filmeRepository = filmeRepository;
+
 		configurarEventos();
+		montarTabela();
+		limparCampos();
 	}
-	
-	public List<Genero> listarGeneros() { return this.generos; }
 	
 	public void configurarEventos() {
 		
@@ -68,53 +71,50 @@ public class GeneroController {
 				JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		
-		view.getGeneroTable().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
-				carregarGeneroSelecionado();
+
+		view.getTable().getSelectionModel().addListSelectionListener(e -> {
+			if(!e.getValueIsAdjusting()) {
+				try { carregarGeneroSelecionado(); }
+				catch(Exception ex) {
+					JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-		});	
-	}
-	
-	public void carregarGeneroSelecionado() {
-		int linhaSelecionada = view.getGeneroTable().getSelectedRow();
-		
-		if(linhaSelecionada == -1)
-			throw new IllegalArgumentException("Linha selecionada inválida!");
-		
-		view.getBtnExcluir().setEnabled(true);
-		
-		int linhaModelo = view.getGeneroTable().convertColumnIndexToModel(linhaSelecionada);
-		Integer id = (Integer) view.getGeneroTableModel().getValueAt(linhaModelo, 0);
-		
-		this.repository.buscarPorId(id).ifPresent(this::preencherCampos);
-	}
-	
-	public void preencherCampos(Genero g) {
-		view.getGeneroTextField().setText(g.getGenero());
-		view.getIdTextField().setText(g.getId().toString());
+		});
 	}
 	
 	public void abrirTelaFilme() {
 		FilmeView filmeView = new FilmeView();
-		FilmeRepository filmeRepository = new FilmeRepository();
-		new FilmeController(filmeView, filmeRepository);
+		new FilmeController(filmeView, filmeRepository, atorRepository, repository);
 		filmeView.setVisible(true);
 		view.dispose();
 	}
 	
 	public void abrirTelaAtor() {
 		AtorView atorView = new AtorView();
-		AtorRepository atorRepository = new AtorRepository();
-		new AtorController(atorView, atorRepository);
+		new AtorController(atorView, atorRepository, filmeRepository, repository);
 		atorView.setVisible(true);
 		view.dispose();
 	}
+
+	public void carregarGeneroSelecionado() {
+		int linhaSelecionada = view.getTable().getSelectedRow();
+
+		if(linhaSelecionada == -1)
+			return;
+
+		int linhaModelo = view.getTable().convertRowIndexToModel(linhaSelecionada);
+		Integer id = (Integer) view.getGeneroTableModel().getValueAt(linhaModelo, 0);
+
+		repository.buscarPorId(id).ifPresent(this::preencherCampos);
+		view.getBtnExcluir().setEnabled(true);
+	}
+
+	public void preencherCampos(Genero genero) {
+		view.getIdTextField().setText(String.valueOf(genero.getId()));
+		view.getGeneroTextField().setText(genero.getGenero());
+	}
 	
 	public void salvarGenero() {
-		System.out.println("salvarGenero");
 		String id = view.getIdTextField().getText();
 		String genero = view.getGeneroTextField().getText();
 		
@@ -142,6 +142,9 @@ public class GeneroController {
 	
 	public void excluirGenero() {
 		String id = view.getIdTextField().getText();
+
+		if(id.isBlank())
+			throw new IllegalArgumentException("Selecione um gênero para excluir!");
 		
 		repository.excluir(Integer.parseInt(id));
 		
@@ -153,6 +156,7 @@ public class GeneroController {
 		view.getGeneroTextField().setText("");
 		view.getIdTextField().setText("");
 		view.getBtnExcluir().setEnabled(false);
+		view.getTable().clearSelection();
 	}
 	
 	public void montarTabela() {

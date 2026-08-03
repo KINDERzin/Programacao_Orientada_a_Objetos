@@ -42,8 +42,6 @@ Projetos maiores desenvolvidos ao longo da disciplina, aplicando os conceitos de
 - [X] Padrão MVC
 - [ ] Tratamento de exceções
 
-*(atualize os checkboxes conforme o conteúdo avança)*
-
 ## 🛠️ Tecnologias
 
 - **Linguagem:** Java

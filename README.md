@@ -33,14 +33,14 @@ Projetos maiores desenvolvidos ao longo da disciplina, aplicando os conceitos de
 
 - [x] Classes e objetos
 - [x] Encapsulamento
-- [x] Construtores
 - [x] Coleções (List, ArrayList)
 - [X] Herança
 - [X] Polimorfismo
-- [ ] Interfaces
 - [X] Padrão MVC
-- [ ] Tratamento de exceções
-
+- [ ] Classe abstrata e interface
+- [ ] Padrão de projeto
+- [ ] Programação Web
+      
 ## 🛠️ Tecnologias
 
 - **Linguagem:** Java

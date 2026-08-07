@@ -17,8 +17,9 @@ Aula as sextas-feiras
 | [03.13](./03.13) | Três exercícios | ✅ |
 | [05.15](./05.15%20-%2040%20exercicios) | 40 exercícios | ✅ |
 | [05.22](./05.22) | Três exercícios | ✅ |
-| [06.12](./06.12) | Aula do dia | ✅ |
-| `08.07` | *(próxima aula)* | 🔜 |
+| [06.12](./06.12) | Prática de execícios | ✅ |
+| [08.07](./08.07) | Interface e abstração | ✅ |
+| `08.14` | *(próxima aula)* | 🔜 |
 
 ## 📁 Projetos
 

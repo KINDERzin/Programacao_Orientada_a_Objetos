@@ -2,7 +2,7 @@
 
 > Repositório de acompanhamento semanal da disciplina de **POO** — Ciência da Computação (UNESPAR, Apucarana/PR).
 
-![Última atualização](https://img.shields.io/badge/última%20atualização-07.08-blue)
+![Última atualização](https://img.shields.io/badge/última%20atualização-07.08-orange)
 ![Linguagem](https://img.shields.io/badge/linguagem-Java-orange)
 
 ## 🔄 Sobre este repositório

@@ -17,9 +17,7 @@ Este repositório é atualizado **semanalmente** com o conteúdo, exercícios e 
 | [05.15 - 40 exercicios](./05.15%20-%2040%20exercicios) | 40 exercícios | ✅ |
 | [05.22](./05.22) | Três exercícios | ✅ |
 | [06.12](./06.12) | Aula do dia | ✅ |
-| `mm.dd` | *(próxima aula)* | 🔜 |
-
-> 💡 Toda semana: cria a pasta com a data (`mm.dd`), adiciona o código e inclui uma linha nova nessa tabela.
+| `08.07` | *(próxima aula)* | 🔜 |
 
 ## 📁 Projetos
 

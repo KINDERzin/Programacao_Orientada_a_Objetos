@@ -2,7 +2,7 @@
 
 > Repositório de acompanhamento semanal da disciplina de **POO** — Ciência da Computação (UNESPAR, Apucarana/PR).
 
-![Última atualização](https://img.shields.io/badge/última%20atualização-06.12-blue)
+![Última atualização](https://img.shields.io/badge/última%20atualização-07.08-orange)
 ![Linguagem](https://img.shields.io/badge/linguagem-Java-orange)
 
 ## 🔄 Sobre este repositório
@@ -10,16 +10,16 @@
 Este repositório é atualizado **semanalmente** com o conteúdo, exercícios e projetos vistos em aula de POO. A ideia é manter um histórico organizado da evolução ao longo do semestre.
 
 ## 🗓️ Log semanal
+Aula as sextas-feiras
 
 | Data | Aula / Conteúdo | Status |
 |------|------------------|--------|
 | [03.13](./03.13) | Três exercícios | ✅ |
-| [05.15 - 40 exercicios](./05.15%20-%2040%20exercicios) | 40 exercícios | ✅ |
+| [05.15](./05.15%20-%2040%20exercicios) | 40 exercícios | ✅ |
 | [05.22](./05.22) | Três exercícios | ✅ |
-| [06.12](./06.12) | Aula do dia | ✅ |
-| `mm.dd` | *(próxima aula)* | 🔜 |
-
-> 💡 Toda semana: cria a pasta com a data (`mm.dd`), adiciona o código e inclui uma linha nova nessa tabela.
+| [06.12](./06.12) | Prática de execícios | ✅ |
+| [08.07](./08.07) | Interface e abstração | ✅ |
+| `08.14` | *(próxima aula)* | 🔜 |
 
 ## 📁 Projetos
 
@@ -34,14 +34,14 @@ Projetos maiores desenvolvidos ao longo da disciplina, aplicando os conceitos de
 
 - [x] Classes e objetos
 - [x] Encapsulamento
-- [x] Construtores
 - [x] Coleções (List, ArrayList)
 - [X] Herança
 - [X] Polimorfismo
-- [ ] Interfaces
 - [X] Padrão MVC
-- [ ] Tratamento de exceções
-
+- [ ] Classe abstrata e interface
+- [ ] Padrão de projeto
+- [ ] Programação Web
+      
 ## 🛠️ Tecnologias
 
 - **Linguagem:** Java

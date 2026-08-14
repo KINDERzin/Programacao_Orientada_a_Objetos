@@ -19,7 +19,7 @@ Aula as sextas-feiras
 | [05.22](./05.22) | Três exercícios | ✅ |
 | [06.12](./06.12) | Prática de execícios | ✅ |
 | [08.07](./08.07) | Interface e abstração | ✅ |
-| 08.14 | Não teve aula | 🔜 |
+| 08.14 | Não teve aula | ✅ |
 | `08.21` | *(próxima aula)* | 🔜 |
 
 ## 📁 Projetos

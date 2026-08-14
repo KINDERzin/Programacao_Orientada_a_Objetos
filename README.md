@@ -51,8 +51,8 @@ Projetos maiores desenvolvidos ao longo da disciplina, aplicando os conceitos de
 ## ▶️ Como rodar
 
 ```bash
-git clone https://github.com/KINDERzin/<nome-do-repo>.git
-cd <nome-do-repo>/<pasta-desejada>
+git clone https://github.com/KINDERzin/<Programacao_Orientada_a_Objetos>.git
+cd <Programacao_Orientada_a_Objetos>/<pasta-desejada>
 javac Main.java
 java Main
 ```

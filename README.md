@@ -2,7 +2,7 @@
 
 > Repositório de acompanhamento semanal da disciplina de **POO** — Ciência da Computação (UNESPAR, Apucarana/PR).
 
-![Última atualização](https://img.shields.io/badge/última%20atualização-07.08-orange)
+![Última atualização](https://img.shields.io/badge/última%20atualização-14.08-orange)
 ![Linguagem](https://img.shields.io/badge/linguagem-Java-orange)
 
 ## 🔄 Sobre este repositório
@@ -19,7 +19,8 @@ Aula as sextas-feiras
 | [05.22](./05.22) | Três exercícios | ✅ |
 | [06.12](./06.12) | Prática de execícios | ✅ |
 | [08.07](./08.07) | Interface e abstração | ✅ |
-| `08.14` | *(próxima aula)* | 🔜 |
+| 08.14 | Não teve aula | 🔜 |
+| `08.21` | *(próxima aula)* | 🔜 |
 
 ## 📁 Projetos
 

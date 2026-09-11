@@ -28,8 +28,8 @@ Projetos maiores desenvolvidos ao longo da disciplina, aplicando os conceitos de
 
 | Projeto | Descrição |
 |---------|-----------|
-| [`CadastroFilme`](./CadastroFilme) | Sistema de cadastro de filmes (MVC) |
-| [`biblioteca`](./biblioteca) | Sistema de gerenciamento de biblioteca |
+| [`Cadastro de filmes`](./CadastroFilme) | Sistema de cadastro de filmes (MVC) |
+| [`Biblioteca`](./biblioteca) | Sistema de gerenciamento de biblioteca |
 
 ## ✅ Tópicos cobertos até aqui
 

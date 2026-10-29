@@ -1,7 +1,6 @@
 package model;
 
-// Exercício 3 - classe ServicoHotel
-public class ServicoHotel {
+public abstract class ServicoHotel {
 	double calcularPreco() {
 		return 0.0;
 	}

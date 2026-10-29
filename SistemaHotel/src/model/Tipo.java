@@ -1,27 +1,16 @@
 package model;
 
 public enum Tipo {
-	SIMPLES,
+	SIMPLES(1),
 	DUPLO(2),
 	SUITE(4),
-	COBERTURA(2),
-	SUPER_PREMIUM(4);
+	COBERTURA(2);
 	
-	private int capacidade;
-
+	private Integer capacidade;
+	
 	private Tipo(int capacidade) {
 		this.capacidade = capacidade;
 	}
 	
-	private Tipo() {
-		
-	}
-	
-	public int getCapacidade() {
-		return this.capacidade;
-	}
-	
-	public void setCapacidade(int capacidade) {
-		this.capacidade = capacidade;
-	}
+	public int getCapacidade() { return this.capacidade; }
 }

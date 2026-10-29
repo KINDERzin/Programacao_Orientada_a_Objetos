@@ -1,55 +1,44 @@
 package model;
 
 public class Quarto {
-	private int numero;
-	private double valorDiaria;
+	private Integer numero;
+	private Double valorDiaria;
 	private Tipo tipo;
 	private Disponibilidade disponibilidade;
 	
-	public Quarto(int numero, double valorDiaria) {
-		this.numero = numero;
-		this.valorDiaria = valorDiaria;
+	public Quarto(int n, double valor, Tipo t, Disponibilidade disp) {
+		setNumero(n);
+		setValorDiaria(valor);
+		this.tipo = t;
+		this.disponibilidade = disp;
 	}
 	
-	public Quarto(int numero) {
-		this.numero = numero;
+	public Integer getNumero() { return numero; }
+	public void setNumero(Integer numero) {
+		if(numero < 0)
+			System.out.println("Número de quarto inválido!");
+		else
+			this.numero = numero;
 	}
 	
-	public Quarto(int numero, 
-			double valorDiaria, 
-			Tipo tipo,
-			Disponibilidade disponibilidade) {
-		this.numero = numero;
-		this.valorDiaria = valorDiaria;
-		this.tipo = tipo;
-		this.disponibilidade = disponibilidade;
+	public Double getValorDiaria() { return this.valorDiaria; }
+	public void setValorDiaria(Double valorDiaria) {
+		if(valorDiaria == null)
+			this.valorDiaria = 0.0; 
+		if(valorDiaria < 0.0)
+			System.out.println("Vai paga o cliente para dormir???");
+		else if(valorDiaria == 0.0)
+			System.out.println("Hotel gratuito?");
+		else
+			this.valorDiaria = valorDiaria;
 	}
-
-	public int getNumero() {
-		return numero;
-	}
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-	public double getValorDiaria() {
-		return valorDiaria;
-	}
-	public void setValorDiaria(double valorDiaria) {
-		this.valorDiaria = valorDiaria;
-	}
-
-	public Disponibilidade getDisponibilidade() {
-		return disponibilidade;
-	}
-
+	
+	public Disponibilidade getDisponibilidade() { return this.disponibilidade; }
+	public Tipo getTipo() { return this.tipo; }
+	
 	@Override
 	public String toString() {
-		return "Quarto " 
-					+ this.numero 
-					+ " - R$ " + this.valorDiaria ;
+		return "Quarto " + getNumero() + " | " + getValorDiaria() + " reais.";
 	}
-
-	public Tipo getTipo() {
-		return tipo;
-	}
+	
 }
